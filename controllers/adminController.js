@@ -1,5 +1,11 @@
 const { getAdmin } = require("../services/admin");
-const { getAllDepartments, createDepartment } = require("../services/department");
+const {
+  getAllDepartments,
+  createDepartment,
+  departmentEdit,
+  getDepById,
+  depDelete,
+} = require("../services/department");
 const {
   getAllStaffs,
   createStaff,
@@ -138,7 +144,6 @@ const editTeacher = async (req, res) => {
       // username,
       // email,
     };
-    console.log(staff);
     await editStaff(staff);
     res.redirect("/admin/teachers");
   } catch (error) {
@@ -149,9 +154,7 @@ const editTeacher = async (req, res) => {
 const deleteTeacher = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(id);
     const deletedStaff = await deleteStaff(id);
-    console.log(deletedStaff);
     res.redirect("/admin/teachers");
   } catch (error) {}
 };
@@ -160,46 +163,48 @@ const getDepartment = async (req, res) => {
   try {
     const { userId, role } = req.session;
     const admin = await getAdmin(userId);
-    const departments = await getAllDepartments()
-    console.log(departments)
+    const departments = await getAllDepartments();
     res.render("adminDepartmentDashboard", { admin, departments });
   } catch (error) {}
 };
 
-const getAddDepartment = async (req, res,)=>{
+const getAddDepartment = async (req, res) => {
   try {
     const { userId, role } = req.session;
     const admin = await getAdmin(userId);
-    res.render("add-department", {admin})
-  } catch (error) {
-    
-  }
-}
+    res.render("add-department", { admin });
+  } catch (error) {}
+};
 
-const addDepartment = async (req, res)=>{
+const addDepartment = async (req, res) => {
   try {
-    const {name, code} = req.body;
-    const department = await createDepartment(name, code)
-    res.redirect("/admin/departments")
-  } catch (error) {
-    
-  }
-}
+    const { name, code } = req.body;
+    const department = await createDepartment(name, code);
+    res.redirect("/admin/departments");
+  } catch (error) {}
+};
 
-const getEditDepartment = async(req, res)=>{
+const getEditDepartment = async (req, res) => {
   const { userId, role } = req.session;
-    const admin = await getAdmin(userId);
-    res.render("edit-department", {admin})
-}
+  const { id } = req.params;
+  const admin = await getAdmin(userId);
+  const departments = await getDepById(parseInt(id));
+  res.render("edit-department", { admin, departments });
+};
 
-const editDepartment = async (req, res)=>{
+const editDepartment = async (req, res) => {
   try {
-    const {name, code} = req.body;
-    await departmentEdit(name,code)
-    res.redirect("/admin/departments")
-  } catch (error) {
-    
-  }
+    const { name, code,id } = req.body;
+    console.log(req.body)
+    await departmentEdit(name, code, parseInt(id));
+    res.redirect("/admin/departments");
+  } catch (error) {}
+};
+
+const deleteDep = async(req , res)=>{
+  const {id} = req.params;
+  await depDelete(parseInt(id))
+  res.redirect("/admin/departments");
 }
 
 module.exports = {
@@ -215,5 +220,6 @@ module.exports = {
   addDepartment,
   getAddDepartment,
   editDepartment,
-  getEditDepartment
+  getEditDepartment,
+  deleteDep
 };
