@@ -1,0 +1,455 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                        Int                    @id @default(autoincrement()) @map("user_id")
+  username                  String                 @unique
+  email                     String                 @unique
+  passwordHash              String                 @map("password_hash")
+  userType                  UserType               @map("user_type")
+  isActive                  Boolean                @default(true) @map("is_active")
+  lastLogin                 DateTime?              @map("last_login")
+  createdAt                 DateTime               @default(now()) @map("created_at")
+  updatedAt                 DateTime               @default(now()) @map("updated_at")
+  adminProfile              AdminProfile?
+  recordedAttendance        Attendance[]           @relation("AttendanceRecorder")
+  attendance                Attendance[]           @relation("AttendanceUser")
+  resolvedComplaints        Complaint[]            @relation("ComplaintResolver")
+  complaints                Complaint[]            @relation("ComplaintCreator")
+  departmentDiscussions     DepartmentDiscussion[]
+  issuedDisciplinaryActions DisciplinaryAction[]   @relation("DisciplinaryIssuer")
+  disciplinaryActions       DisciplinaryAction[]   @relation("DisciplinarySubject")
+  discussionReplies         DiscussionReply[]
+  eventFeedback             EventFeedback[]
+  eventRegistrations        EventRegistration[]
+  createdEvents             Event[]                @relation("EventCreator")
+  reviewedLeaves            LeaveRequest[]         @relation("LeaveReviewer")
+  leaveRequests             LeaveRequest[]         @relation("LeaveRequester")
+  notifications             Notification[]
+  staffProfile              StaffProfile?
+  studentProfile            StudentProfile?
+  reviewedSuggestions       Suggestion[]           @relation("SuggestionReviewer")
+  suggestions               Suggestion[]           @relation("SuggestionCreator")
+  systemLogs                SystemLog[]
+  approvedVehicles          VehicleRecord[]        @relation("VehicleApprover")
+  vehicleRecords            VehicleRecord[]        @relation("VehicleOwner")
+
+  @@map("users")
+}
+
+model ComplaintCategory {
+  id          Int         @id @default(autoincrement()) @map("category_id")
+  name        String
+  description String?
+  isActive    Boolean     @default(true) @map("is_active")
+  createdAt   DateTime    @default(now()) @map("created_at")
+  complaints  Complaint[]
+
+  @@map("complaint_categories")
+}
+
+model EventType {
+  id          Int      @id @default(autoincrement()) @map("type_id")
+  name        String
+  description String?
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  events      Event[]
+
+  @@map("event_types")
+}
+
+model DisciplinaryActionType {
+  id                  Int                  @id @default(autoincrement()) @map("type_id")
+  name                String
+  description         String?
+  defaultSeverity     Severity?            @map("default_severity")
+  isActive            Boolean              @default(true) @map("is_active")
+  createdAt           DateTime             @default(now()) @map("created_at")
+  disciplinaryActions DisciplinaryAction[]
+
+  @@map("disciplinary_action_types")
+}
+
+model Department {
+  id               Int                    @id @default(autoincrement()) @map("department_id")
+  name             String
+  code             String                 @unique
+  headOfDepartment Int?                   @map("head_of_department")
+  createdAt        DateTime               @default(now()) @map("created_at")
+  discussions      DepartmentDiscussion[]
+  headStaff        StaffProfile?          @relation("DepartmentHead", fields: [headOfDepartment], references: [id])
+  staff            StaffProfile[]         @relation("DepartmentStaff")
+  students         StudentProfile[]
+
+  @@map("departments")
+}
+
+model StudentProfile {
+  id               Int         @id @default(autoincrement()) @map("student_id")
+  userId           Int         @unique @map("user_id")
+  fullName         String      @map("full_name")
+  departmentId     Int?        @map("department_id")
+  enrollmentNumber String?     @unique @map("enrollment_number")
+  semester         Int?
+  contactNumber    String?     @map("contact_number")
+  emergencyContact String?     @map("emergency_contact")
+  address          String?
+  joiningDate      DateTime?   @map("joining_date") @db.Date
+  updatedAt        DateTime    @default(now()) @map("updated_at")
+  department       Department? @relation(fields: [departmentId], references: [id])
+  user             User        @relation(fields: [userId], references: [id])
+
+  @@map("student_profile")
+}
+
+model StaffProfile {
+  id                    Int          @id @default(autoincrement()) @map("staff_id")
+  userId                Int          @unique @map("user_id")
+  fullName              String       @map("full_name")
+  departmentId          Int?         @map("department_id")
+  designation           String?
+  subjectSpecialization String?      @map("subject_specialization")
+  contactNumber         String?      @map("contact_number")
+  officeLocation        String?      @map("office_location")
+  joiningDate           DateTime?    @map("joining_date") @db.Date
+  updatedAt             DateTime     @default(now()) @map("updated_at")
+  gender                String?
+  headOfDepartments     Department[] @relation("DepartmentHead")
+  department            Department?  @relation("DepartmentStaff", fields: [departmentId], references: [id])
+  user                  User         @relation(fields: [userId], references: [id])
+
+  @@map("staff_profile")
+}
+
+model AdminProfile {
+  id            Int      @id @default(autoincrement()) @map("admin_id")
+  userId        Int      @unique @map("user_id")
+  fullName      String   @map("full_name")
+  contactNumber String?  @map("contact_number")
+  adminRole     String?  @map("admin_role")
+  updatedAt     DateTime @default(now()) @map("updated_at")
+  user          User     @relation(fields: [userId], references: [id])
+
+  @@map("admin_profile")
+}
+
+model Event {
+  id              Int                 @id @default(autoincrement()) @map("event_id")
+  title           String
+  description     String?
+  eventTypeId     Int                 @map("event_type_id")
+  startDatetime   DateTime            @map("start_datetime")
+  endDatetime     DateTime            @map("end_datetime")
+  location        String?
+  maxParticipants Int?                @map("max_participants")
+  createdBy       Int                 @map("created_by")
+  isPublished     Boolean             @default(false) @map("is_published")
+  createdAt       DateTime            @default(now()) @map("created_at")
+  updatedAt       DateTime            @default(now()) @map("updated_at")
+  feedback        EventFeedback[]
+  registrations   EventRegistration[]
+  creator         User                @relation("EventCreator", fields: [createdBy], references: [id])
+  eventType       EventType           @relation(fields: [eventTypeId], references: [id])
+
+  @@map("events")
+}
+
+model EventRegistration {
+  id                Int              @id @default(autoincrement()) @map("registration_id")
+  eventId           Int              @map("event_id")
+  userId            Int              @map("user_id")
+  registrationDate  DateTime         @default(now()) @map("registration_date")
+  attendanceStatus  AttendanceStatus @default(registered) @map("attendance_status")
+  feedbackSubmitted Boolean          @default(false) @map("feedback_submitted")
+  event             Event            @relation(fields: [eventId], references: [id])
+  user              User             @relation(fields: [userId], references: [id])
+
+  @@unique([eventId, userId])
+  @@map("event_registrations")
+}
+
+model EventFeedback {
+  id           Int      @id @default(autoincrement()) @map("feedback_id")
+  eventId      Int      @map("event_id")
+  userId       Int      @map("user_id")
+  rating       Int?
+  feedbackText String?  @map("feedback_text")
+  isAnonymous  Boolean  @default(false) @map("is_anonymous")
+  submittedAt  DateTime @default(now()) @map("submitted_at")
+  event        Event    @relation(fields: [eventId], references: [id])
+  user         User     @relation(fields: [userId], references: [id])
+
+  @@map("event_feedback")
+}
+
+model Complaint {
+  id              Int               @id @default(autoincrement()) @map("complaint_id")
+  userId          Int               @map("user_id")
+  categoryId      Int               @map("category_id")
+  title           String
+  description     String
+  location        String?
+  priority        Priority?
+  status          ComplaintStatus   @default(submitted)
+  submittedAt     DateTime          @default(now()) @map("submitted_at")
+  resolvedAt      DateTime?         @map("resolved_at")
+  resolvedBy      Int?              @map("resolved_by")
+  resolutionNotes String?           @map("resolution_notes")
+  category        ComplaintCategory @relation(fields: [categoryId], references: [id])
+  resolver        User?             @relation("ComplaintResolver", fields: [resolvedBy], references: [id])
+  user            User              @relation("ComplaintCreator", fields: [userId], references: [id])
+
+  @@map("complaints")
+}
+
+model Suggestion {
+  id          Int                 @id @default(autoincrement()) @map("suggestion_id")
+  userId      Int                 @map("user_id")
+  title       String
+  description String
+  category    SuggestionCategory?
+  status      SuggestionStatus    @default(submitted)
+  submittedAt DateTime            @default(now()) @map("submitted_at")
+  reviewedAt  DateTime?           @map("reviewed_at")
+  reviewedBy  Int?                @map("reviewed_by")
+  feedback    String?
+  reviewer    User?               @relation("SuggestionReviewer", fields: [reviewedBy], references: [id])
+  user        User                @relation("SuggestionCreator", fields: [userId], references: [id])
+
+  @@map("suggestions")
+}
+
+model VehicleRecord {
+  id                         Int         @id @default(autoincrement()) @map("vehicle_id")
+  userId                     Int         @map("user_id")
+  vehicleType                VehicleType @map("vehicle_type")
+  vehicleNumber              String      @unique @map("vehicle_number")
+  make                       String?
+  model                      String?
+  color                      String?
+  pollutionCertificateNumber String?     @map("pollution_certificate_number")
+  pollutionValidity          DateTime?   @map("pollution_validity") @db.Date
+  rcDocumentPath             String?     @map("rc_document_path")
+  licenseDocumentPath        String?     @map("license_document_path")
+  isApproved                 Boolean     @default(false) @map("is_approved")
+  approvedBy                 Int?        @map("approved_by")
+  registrationDate           DateTime    @default(now()) @map("registration_date")
+  updatedAt                  DateTime    @default(now()) @map("updated_at")
+  approver                   User?       @relation("VehicleApprover", fields: [approvedBy], references: [id])
+  user                       User        @relation("VehicleOwner", fields: [userId], references: [id])
+
+  @@map("vehicle_records")
+}
+
+model Attendance {
+  id           Int            @id @default(autoincrement()) @map("attendance_id")
+  userId       Int            @map("user_id")
+  date         DateTime       @db.Date
+  status       AttendanceType
+  checkInTime  DateTime?      @map("check_in_time") @db.Time(6)
+  checkOutTime DateTime?      @map("check_out_time") @db.Time(6)
+  recordedBy   Int            @map("recorded_by")
+  remarks      String?
+  recorder     User           @relation("AttendanceRecorder", fields: [recordedBy], references: [id])
+  user         User           @relation("AttendanceUser", fields: [userId], references: [id])
+
+  @@unique([userId, date])
+  @@map("attendance")
+}
+
+model LeaveRequest {
+  id          Int         @id @default(autoincrement()) @map("leave_id")
+  userId      Int         @map("user_id")
+  leaveType   LeaveType   @map("leave_type")
+  startDate   DateTime    @map("start_date") @db.Date
+  endDate     DateTime    @map("end_date") @db.Date
+  reason      String
+  status      LeaveStatus @default(pending)
+  submittedAt DateTime    @default(now()) @map("submitted_at")
+  reviewedBy  Int?        @map("reviewed_by")
+  reviewedAt  DateTime?   @map("reviewed_at")
+  comments    String?
+  reviewer    User?       @relation("LeaveReviewer", fields: [reviewedBy], references: [id])
+  user        User        @relation("LeaveRequester", fields: [userId], references: [id])
+
+  @@map("leave_requests")
+}
+
+model DisciplinaryAction {
+  id             Int                    @id @default(autoincrement()) @map("action_id")
+  userId         Int                    @map("user_id")
+  actionTypeId   Int                    @map("action_type_id")
+  reason         String
+  description    String?
+  severity       Severity
+  issuedBy       Int                    @map("issued_by")
+  issueDate      DateTime               @default(now()) @map("issue_date")
+  validUntil     DateTime?              @map("valid_until") @db.Date
+  status         ActionStatus           @default(active)
+  attachmentPath String?                @map("attachment_path")
+  actionType     DisciplinaryActionType @relation(fields: [actionTypeId], references: [id])
+  issuer         User                   @relation("DisciplinaryIssuer", fields: [issuedBy], references: [id])
+  user           User                   @relation("DisciplinarySubject", fields: [userId], references: [id])
+
+  @@map("disciplinary_actions")
+}
+
+model DepartmentDiscussion {
+  id           Int               @id @default(autoincrement()) @map("discussion_id")
+  departmentId Int               @map("department_id")
+  userId       Int               @map("user_id")
+  title        String
+  content      String
+  isIssue      Boolean           @default(false) @map("is_issue")
+  status       DiscussionStatus  @default(open)
+  createdAt    DateTime          @default(now()) @map("created_at")
+  updatedAt    DateTime          @default(now()) @map("updated_at")
+  department   Department        @relation(fields: [departmentId], references: [id])
+  user         User              @relation(fields: [userId], references: [id])
+  replies      DiscussionReply[]
+
+  @@map("department_discussions")
+}
+
+model DiscussionReply {
+  id                 Int                  @id @default(autoincrement()) @map("reply_id")
+  discussionId       Int                  @map("discussion_id")
+  userId             Int                  @map("user_id")
+  content            String
+  isOfficialResponse Boolean              @default(false) @map("is_official_response")
+  createdAt          DateTime             @default(now()) @map("created_at")
+  updatedAt          DateTime             @default(now()) @map("updated_at")
+  discussion         DepartmentDiscussion @relation(fields: [discussionId], references: [id])
+  user               User                 @relation(fields: [userId], references: [id])
+
+  @@map("discussion_replies")
+}
+
+model Notification {
+  id               Int              @id @default(autoincrement()) @map("notification_id")
+  userId           Int              @map("user_id")
+  title            String
+  message          String
+  notificationType NotificationType @map("notification_type")
+  relatedId        Int?             @map("related_id")
+  isRead           Boolean          @default(false) @map("is_read")
+  createdAt        DateTime         @default(now()) @map("created_at")
+  user             User             @relation(fields: [userId], references: [id])
+
+  @@map("notifications")
+}
+
+model SystemLog {
+  id         Int      @id @default(autoincrement()) @map("log_id")
+  userId     Int?     @map("user_id")
+  action     String
+  entityType String?  @map("entity_type")
+  entityId   Int?     @map("entity_id")
+  ipAddress  String?  @map("ip_address")
+  userAgent  String?  @map("user_agent")
+  createdAt  DateTime @default(now()) @map("created_at")
+  user       User?    @relation(fields: [userId], references: [id])
+
+  @@map("system_logs")
+}
+
+enum UserType {
+  admin
+  staff
+  student
+}
+
+enum AttendanceStatus {
+  registered
+  attended
+  absent
+  cancelled
+}
+
+enum Priority {
+  low
+  medium
+  high
+  critical
+}
+
+enum ComplaintStatus {
+  submitted
+  under_review
+  resolved
+  rejected
+}
+
+enum SuggestionCategory {
+  academic
+  facility
+  administrative
+  other
+}
+
+enum SuggestionStatus {
+  submitted
+  under_review
+  implemented
+  rejected
+}
+
+enum VehicleType {
+  two_wheeler
+  four_wheeler
+  other
+}
+
+enum AttendanceType {
+  present
+  absent
+  late
+  half_day
+  on_leave
+}
+
+enum LeaveType {
+  sick
+  casual
+  emergency
+  other
+}
+
+enum LeaveStatus {
+  pending
+  approved
+  rejected
+}
+
+enum Severity {
+  low
+  medium
+  high
+}
+
+enum ActionStatus {
+  active
+  expired
+  revoked
+}
+
+enum DiscussionStatus {
+  open
+  resolved
+  closed
+}
+
+enum NotificationType {
+  event
+  complaint
+  disciplinary
+  attendance
+  general
+}
