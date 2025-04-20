@@ -6,6 +6,7 @@ const {
   getDepById,
   depDelete,
 } = require("../services/department");
+const { reportDelete, getAllReports } = require("../services/report");
 const {
   getAllStaffs,
   createStaff,
@@ -207,6 +208,32 @@ const deleteDep = async(req , res)=>{
   res.redirect("/admin/departments");
 }
 
+
+const getReports = async(req, res)=>{
+  const { userId, role } = req.session;
+  const admin = await getAdmin(userId);
+  const reports = await getAllReports()
+  console.log(reports)
+  res.render('adminReportDashboard', {admin, reports})
+
+}
+
+const deleteReport = async(req, res)=>{
+  const {id}= req.params;
+  await reportDelete(id)
+  res.redirect('/admin/reports')
+}
+
+
+const getVehicle = async(req, res)=>{
+  
+  const { userId, role } = req.session;
+  const vehicles = await getAllVehilces()
+  const admin = await getAdmin(userId);
+  res.render('adminVehicleDashboard', {admin, vehicles})
+}
+
+
 module.exports = {
   getAdminDashboard,
   getAdminStudent,
@@ -221,5 +248,8 @@ module.exports = {
   getAddDepartment,
   editDepartment,
   getEditDepartment,
-  deleteDep
+  deleteDep,
+  getReports,
+  deleteReport,
+  getVehicle,
 };

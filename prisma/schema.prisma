@@ -37,21 +37,8 @@ model User {
   reviewedSuggestions       Suggestion[]           @relation("SuggestionReviewer")
   suggestions               Suggestion[]           @relation("SuggestionCreator")
   systemLogs                SystemLog[]
-  approvedVehicles          VehicleRecord[]        @relation("VehicleApprover")
-  vehicleRecords            VehicleRecord[]        @relation("VehicleOwner")
 
   @@map("users")
-}
-
-model ComplaintCategory {
-  id          Int         @id @default(autoincrement()) @map("category_id")
-  name        String
-  description String?
-  isActive    Boolean     @default(true) @map("is_active")
-  createdAt   DateTime    @default(now()) @map("created_at")
-  complaints  Complaint[]
-
-  @@map("complaint_categories")
 }
 
 model EventType {
@@ -190,21 +177,20 @@ model EventFeedback {
 }
 
 model Complaint {
-  id              Int               @id @default(autoincrement()) @map("complaint_id")
-  userId          Int               @map("user_id")
-  categoryId      Int               @map("category_id")
+  id              Int             @id @default(autoincrement()) @map("complaint_id")
+  userId          Int             @map("user_id")
+  category        Int             @map("category_id")
   title           String
   description     String
   location        String?
   priority        Priority?
-  status          ComplaintStatus   @default(submitted)
-  submittedAt     DateTime          @default(now()) @map("submitted_at")
-  resolvedAt      DateTime?         @map("resolved_at")
-  resolvedBy      Int?              @map("resolved_by")
-  resolutionNotes String?           @map("resolution_notes")
-  category        ComplaintCategory @relation(fields: [categoryId], references: [id])
-  resolver        User?             @relation("ComplaintResolver", fields: [resolvedBy], references: [id])
-  user            User              @relation("ComplaintCreator", fields: [userId], references: [id])
+  status          ComplaintStatus @default(submitted)
+  submittedAt     DateTime        @default(now()) @map("submitted_at")
+  resolvedAt      DateTime?       @map("resolved_at")
+  resolvedBy      Int?            @map("resolved_by")
+  resolutionNotes String?         @map("resolution_notes")
+  resolver        User?           @relation("ComplaintResolver", fields: [resolvedBy], references: [id])
+  user            User            @relation("ComplaintCreator", fields: [userId], references: [id])
 
   @@map("complaints")
 }
@@ -227,23 +213,18 @@ model Suggestion {
 }
 
 model VehicleRecord {
-  id                         Int         @id @default(autoincrement()) @map("vehicle_id")
-  userId                     Int         @map("user_id")
-  vehicleType                VehicleType @map("vehicle_type")
-  vehicleNumber              String      @unique @map("vehicle_number")
-  make                       String?
+  id                         Int       @id @default(autoincrement()) @map("vehicle_id")
+  // userId                     Int         @map("user_id")
+  // vehicleType                VehicleType @map("vehicle_type")
+  vehicleNumber              String    @unique @map("vehicle_number")
+  makeYear                   String?
   model                      String?
   color                      String?
-  pollutionCertificateNumber String?     @map("pollution_certificate_number")
-  pollutionValidity          DateTime?   @map("pollution_validity") @db.Date
-  rcDocumentPath             String?     @map("rc_document_path")
-  licenseDocumentPath        String?     @map("license_document_path")
-  isApproved                 Boolean     @default(false) @map("is_approved")
-  approvedBy                 Int?        @map("approved_by")
-  registrationDate           DateTime    @default(now()) @map("registration_date")
-  updatedAt                  DateTime    @default(now()) @map("updated_at")
-  approver                   User?       @relation("VehicleApprover", fields: [approvedBy], references: [id])
-  user                       User        @relation("VehicleOwner", fields: [userId], references: [id])
+  pollutionCertificateNumber String?   @map("pollution_certificate_number")
+  pollutionValidity          DateTime? @map("pollution_validity") @db.Date
+  registrationDate           DateTime  @default(now()) @map("registration_date")
+  updatedAt                  DateTime  @default(now()) @map("updated_at")
+  // user                       User        @relation("VehicleOwner", fields: [userId], references: [id])
 
   @@map("vehicle_records")
 }
@@ -399,12 +380,6 @@ enum SuggestionStatus {
   under_review
   implemented
   rejected
-}
-
-enum VehicleType {
-  two_wheeler
-  four_wheeler
-  other
 }
 
 enum AttendanceType {

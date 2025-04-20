@@ -222,12 +222,12 @@
           <div class="page-header">
             <div class="row align-items-center">
               <div class="col">
-                <h3 class="page-title">Edit Teachers</h3>
+                <h3 class="page-title">Add Report</h3>
                 <ul class="breadcrumb">
                   <li class="breadcrumb-item">
-                    <a href="/admin/teachers">Teachers</a>
+                    <a href="/admin/reportings">Reporting</a>
                   </li>
-                  <li class="breadcrumb-item active">Edit Teachers</li>
+                  <li class="breadcrumb-item active">Add Report</li>
                 </ul>
               </div>
             </div>
@@ -237,79 +237,35 @@
             <div class="col-sm-12">
               <div class="card">
                 <div class="card-body">
-                  <form action="/admin/editTeacher" method="post">
+                  <form action="/admin/department" method="post">
                     <div class="row">
                       <div class="col-12">
                         <h5 class="form-title"><span>Basic Details</span></h5>
                       </div>
                       <div class="col-12 col-sm-4">
                         <div class="form-group local-forms">
-                          <label>Name <span class="login-danger">*</span></label>
-                          <input type="text" required name="name" class="form-control" placeholder="Enter Name" value="<%= staff.fullName %>" />
+                          <label>Complaint Title <span class="login-danger">*</span></label>
+                          <input type="text" required  name="name" class="form-control" placeholder="Enter Complaint Title" />
                         </div>
                       </div>
                       <div class="col-12 col-sm-4">
                         <div class="form-group local-forms">
-                          <label>Gender <span class="login-danger">*</span></label>
-                          <select name="gender" class="form-control select">
-                            <option <%= staff.gender === 'Male' ? 'selected' : '' %>>Male</option>
-                            <option <%= staff.gender === 'Female' ? 'selected' : '' %>>Female</option>
-                            <option <%= staff.gender === 'Others' ? 'selected' : '' %>>Others</option>
-                          </select>
+                          <label>Description <span class="login-danger">*</span></label>
+                          <input type="text" name="description" required class="form-control" placeholder="Enter Description" />
                         </div>
                       </div>
                       <div class="col-12 col-sm-4">
                         <div class="form-group local-forms">
-                          <label>Mobile <span class="login-danger">*</span></label>
-                          <input type="text" name="phone" class="form-control" required placeholder="Enter Phone" value="<%= staff.contactNumber %>" />
-                        </div>
-                      </div>
-                      <!-- <div class="col-12 col-sm-4">
-                        <div class="form-group local-forms calendar-icon">
-                          <label>Joining Date <span class="login-danger">*</span></label>
-                          <input type="text" name="joiningDate" required class="form-control datetimepicker" placeholder="DD-MM-YYYY" value="<%= staff.joiningDate %>" />
-                        </div>
-                      </div> -->
-                      <div class="col-12 col-sm-4">
-                        <div class="form-group local-forms">
-                          <label>Subject Specialisation <span class="login-danger">*</span></label>
-                          <input type="text" name="subject" class="form-control" required value="<%= staff.subjectSpecialization %>" />
+                          <label>Category <span class="login-danger">*</span></label>
+                          <input type="text" name="category" required class="form-control" placeholder="Enter Category" />
                         </div>
                       </div>
                       <div class="col-12 col-sm-4">
                         <div class="form-group local-forms">
-                          <label>Designation <span class="login-danger">*</span></label>
-                          <input type="text" name="designation" class="form-control" required value="<%= staff.designation %>" />
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-4">
-                        <div class="form-group local-forms">
-                            <label>Department <span class="login-danger">*</span></label>
-                            <input type="text" name="department" class="form-control" required value="<%= staff.department.name %>" />
+                          <label>Reported By <span class="login-danger">*</span></label>
+                          <input type="text" name="username" required class="form-control" placeholder="Enter Your username" />
                         </div>
                       </div>
-                  
-                      <!-- <div class="col-12">
-                        <h5 class="form-title"><span>Login Details</span></h5>
-                      </div>
-                      <div class="col-12 col-sm-4">
-                        <div class="form-group local-forms">
-                          <label>Username <span class="login-danger">*</span></label>
-                          <input type="text" name="username" class="form-control" value="<%= staff.user?.username %>" />
-                        </div>
-                      </div>
-                      <div class="col-12 col-sm-4">
-                        <div class="form-group local-forms">
-                          <label>Email ID <span class="login-danger">*</span></label>
-                          <input type="email" name="email" class="form-control" value="<%= staff.user?.email %>" />
-                        </div>
-                      </div> -->
-                      <!-- <div class="col-12 col-sm-4">
-                        <div class="form-group local-forms"> -->
-                          <!-- <label>Password <span class="login-danger">*</span></label> -->
-                          <input type="hidden" name="id" value="<%= staff.id %>" />
-                        <!-- </div>
-                      </div> -->
                   
                       <div class="col-12">
                         <div class="student-submit">

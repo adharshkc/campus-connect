@@ -14,6 +14,8 @@ const {
   getEditDepartment,
   editDepartment,
   deleteDep,
+  getReports,
+  deleteReport,
 } = require("../controllers/adminController");
 const { isAdmin } = require("../middlewares/authentication");
 const router = express.Router();
@@ -32,5 +34,8 @@ router.get('/admin/editDepartment/:id', isAdmin, getEditDepartment)
 router.post('/admin/department', isAdmin, addDepartment)
 router.post('/admin/editDepartment', isAdmin, editDepartment)
 router.get('/admin/deleteDepartment/:id', isAdmin, deleteDep)
+router.get('/admin/reports', isAdmin, getReports)
+router.get('/admin/deleteReport', isAdmin, deleteReport)
+router.get('/admin/vehicle', isAdmin, )
 
 module.exports = router;
