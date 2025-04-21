@@ -15,6 +15,7 @@ const {
   editStaff,
 } = require("../services/staff");
 const { getAllStudents } = require("../services/student");
+const { getAllVehicles, createVehicle, getVehicleById, editVeh, delVehicle } = require("../services/vehicles");
 
 const getAdminDashboard = async (req, res, next) => {
   try {
@@ -195,44 +196,112 @@ const getEditDepartment = async (req, res) => {
 
 const editDepartment = async (req, res) => {
   try {
-    const { name, code,id } = req.body;
-    console.log(req.body)
+    const { name, code, id } = req.body;
+    console.log(req.body);
     await departmentEdit(name, code, parseInt(id));
     res.redirect("/admin/departments");
   } catch (error) {}
 };
 
-const deleteDep = async(req , res)=>{
-  const {id} = req.params;
-  await depDelete(parseInt(id))
+const deleteDep = async (req, res) => {
+  const { id } = req.params;
+  await depDelete(parseInt(id));
   res.redirect("/admin/departments");
-}
+};
 
-
-const getReports = async(req, res)=>{
+const getReports = async (req, res) => {
   const { userId, role } = req.session;
   const admin = await getAdmin(userId);
-  const reports = await getAllReports()
-  console.log(reports)
-  res.render('adminReportDashboard', {admin, reports})
+  const reports = await getAllReports();
+  console.log(reports);
+  res.render("adminReportDashboard", { admin, reports });
+};
 
-}
+const deleteReport = async (req, res) => {
+  const { id } = req.params;
+  await reportDelete(id);
+  res.redirect("/admin/reports");
+};
 
-const deleteReport = async(req, res)=>{
-  const {id}= req.params;
-  await reportDelete(id)
-  res.redirect('/admin/reports')
-}
-
-
-const getVehicle = async(req, res)=>{
-  
+const getVehicle = async (req, res) => {
   const { userId, role } = req.session;
-  const vehicles = await getAllVehilces()
+  const vehicles = await getAllVehicles();
   const admin = await getAdmin(userId);
-  res.render('adminVehicleDashboard', {admin, vehicles})
+  res.render("adminVehicleDashboard", { admin, vehicles });
+};
+
+const getAddVehicle = async (req, res) => {
+  const { userId } = req.session;
+  const admin = getAdmin(userId);
+  res.render("add-vehicles", { admin });
+};
+
+const addVehicle = async (req, res) => {
+  const {
+    vehicleNumber,
+    makeYear,
+    model,
+    color,
+    pollutionCertificateNumber,
+    pollutionValidity,
+    registrationDate,
+  } = req.body;
+
+  const vehicle = {
+    vehicleNumber,
+    makeYear,
+    model,
+    color,
+    pollutionCertificateNumber,
+    pollutionValidity,
+    registrationDate,
+  }
+  await createVehicle(vehicle)
+  res.redirect("/admin/vehicles")
+};
+
+const getEditVehicle = async (req, res)=>{
+  const { userId } = req.session;
+  const {id} = req.params
+  const admin = getAdmin(userId);
+  const vehicle = await getVehicleById(parseInt(id));
+  res.render("edit-vehicle", {admin, vehicle})
 }
 
+
+const editVehicle = async(req, res)=>{
+  const {
+    id,
+    vehicleNumber,
+    makeYear,
+    model,
+    color,
+    pollutionCertificateNumber,
+    pollutionValidity,
+    registrationDate,
+  } = req.body;
+
+  const vehicle = {
+    id,
+    vehicleNumber,
+    makeYear,
+    model,
+    color,
+    pollutionCertificateNumber,
+    pollutionValidity,
+    registrationDate,
+  }
+  await editVeh(vehicle)
+  res.redirect("/admin/vehicles")
+}
+
+
+
+const deleteVehicle = async(req , res)=>{
+  const {id} = req.params;
+  await delVehicle(parseInt(id))
+  res.redirect("/admin/vehicles")
+}
 
 module.exports = {
   getAdminDashboard,
@@ -252,4 +321,9 @@ module.exports = {
   getReports,
   deleteReport,
   getVehicle,
+  getAddVehicle,
+  addVehicle,
+  getEditVehicle,
+  editVehicle,
+  deleteVehicle
 };

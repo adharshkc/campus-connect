@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=0"
     />
-    <title> Departments</title>
+    <title> Teachers</title>
 
     <link rel="shortcut icon" href="/assets/img/favicon.png" />
 
@@ -24,16 +24,15 @@
 
     <link rel="stylesheet" href="/assets/plugins/icons/flags/flags.css" />
 
+    <link rel="stylesheet" href="/assets/css/bootstrap-datetimepicker.min.css" />
+
     <link
       rel="stylesheet"
       href="/assets/plugins/fontawesome/css/fontawesome.min.css"
     />
     <link rel="stylesheet" href="/assets/plugins/fontawesome/css/all.min.css" />
 
-    <link
-      rel="stylesheet"
-      href="/assets/plugins/datatables/datatables.min.css"
-    />
+    <link rel="stylesheet" href="/assets/plugins/select2/css/select2.min.css" />
 
     <link rel="stylesheet" href="/assets/css/style.css" />
   </head>
@@ -169,7 +168,7 @@
                             <li><a href="edit-student.html">Student Edit</a></li>
                         </ul> -->
               </li>
-              <li class="submen">
+              <li class="submen active">
                 <a href="/admin/teachers"
                   ><i class="fas fa-chalkboard-teacher"></i>
                   <span> Teachers</span> <span class="menu-arrow"></span
@@ -181,7 +180,7 @@
                             <li><a href="edit-teacher.html">Teacher Edit</a></li>
                         </ul> -->
               </li>
-              <li class="submen ">
+              <li class="submenu">
                 <a href="/admin/departments"
                   ><i class="fas fa-building"></i> <span> Departments</span>
                   <span class="menu-arrow"></span
@@ -192,7 +191,7 @@
                             <li><a href="edit-department.html">Department Edit</a></li>
                         </ul> -->
               </li>
-              <li class="submen">
+              <li class="submenu">
                 <a href="/admin/reports"
                   ><i class="fas fa-book-reader"></i> <span> Reportings</span>
                   <span class="menu-arrow"></span
@@ -203,7 +202,7 @@
                             <li><a href="edit-subject.html">Subject Edit</a></li>
                         </ul> -->
               </li>
-              <li class="active">
+              <li>
                 <a href="/admin/vehicles"
                   ><i class="fas fa-holly-berry"></i> <span>Vehicles</span></a
                 >
@@ -223,152 +222,102 @@
           <div class="page-header">
             <div class="row align-items-center">
               <div class="col">
-                <h3 class="page-title">Vehicles</h3>
+                <h3 class="page-title">Edit Department</h3>
                 <ul class="breadcrumb">
                   <li class="breadcrumb-item">
-                    <a href="#">Vehicles</a>
+                    <a href="/admin/departments">Department</a>
                   </li>
-                  <li class="breadcrumb-item active">Vehicles</li>
+                  <li class="breadcrumb-item active">Edit Department</li>
                 </ul>
               </div>
             </div>
           </div>
 
-        
           <div class="row">
             <div class="col-sm-12">
-              <div class="card card-table">
+              <div class="card">
                 <div class="card-body">
-                  <div class="page-header">
-                    <div class="row align-items-center">
-                      <div class="col">
-                        <h3 class="page-title">Departments</h3>
-                      </div>
-                      <div
-                        class="col-auto text-end float-end ms-auto download-grp"
-                      >
-                        <a
-                          href="#"
-                          class="btn btn-outline-gray me-2 active"
-                          ><i class="feather-list"></i
-                        ></a>
-                        <!-- <a
-                          href="teachers-grid.html"
-                          class="btn btn-outline-gray me-2"
-                          ><i class="feather-grid"></i
-                        ></a> -->
-                        <!-- <a href="#" class="btn btn-outline-primary me-2"
-                          ><i class="fas fa-download"></i> Download</a
-                        > -->
-                        <a href="/admin/addVehicle" class="btn btn-primary"
-                          ><i class="fas fa-plus"></i
-                        ></a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="table-responsive">
-                    <table
-                    class="table border-0 star-student table-hover table-center mb-0 table-striped"
-                  >
-                    <thead class="student-thread">
-                      <tr>
-                        <th>
-                          <div class="form-check check-tables">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value="something"
-                            />
+                    <form action="/admin/editVehicle" method="post">
+                        <div class="row">
+                          <div class="col-12">
+                            <h5 class="form-title"><span><%= vehicle ? 'Edit Vehicle' : 'Basic Details' %></span></h5>
                           </div>
-                        </th>
-                        <th>ID</th>
-                        <th>Number</th>
-                        <th>Model</th>
-                        <th>Year</th>
-                        <th>Color</th>
-                        <th>Pollution Number</th>
-                        <th>Pollution Validity</th>
-                        <th>Reg Date</th>
-                        <th class="text-end">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <% vehicles.forEach(function(vehicle) { %>
-                      <tr>
-                        <td>
-                          <div class="form-check check-tables">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value="<%= vehicle.id %>"
-                            />
+                          <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                              <label>Vehicle Number <span class="login-danger">*</span></label>
+                              <input type="text" required name="vehicleNumber" class="form-control" placeholder="Enter Number" value="<%= vehicle ? vehicle.vehicleNumber : '' %>" />
+                              <input type="hidden" required name="id" class="form-control" placeholder="Enter Number" value="<%= vehicle.id %>" />
+                            </div>
                           </div>
-                        </td>
-                        <td><%= vehicle.id || 'N/A' %></td>
-                        <td>
-                          <h2 class="table-avatar">
-                            <a href="#"
-                              ><%= vehicle.vehicleNumber %></a
-                            >
-                          </h2>
-                        </td>
-                        <!-- <td>
-                          <%= new Date(vehicle.joiningDate).toLocaleDateString('en-GB') %>
-                        </td> -->
-                        <td>
-                          <%= vehicle.model
-                          %>
-                        </td>
-                        <td><%= vehicle.makeYear || 'N/A' %></td>
-                        <td><%= vehicle.color || 'N/A' %></td>
-                        <td><%= vehicle.pollutionCertificateNumber || 'N/A' %></td>
-                        <td>
-                            <%= new Date(vehicle.pollutionValidity).toLocaleDateString('en-GB') %>
-                          </td> 
-                        <td>
-                            <%= new Date(vehicle.registrationDate).toLocaleDateString('en-GB') %>
-                          </td> 
-                        <td class="text-end">
-                          <div class="actions">
-                            <a
-                              href="/admin/deleteVehicle/<%= vehicle.id %>"
-                              class="btn btn-sm bg-success-light me-2"
-                            >
-                              <i class="feather-trash"></i>
-                            </a>
-                            <a
-                              href="/admin/editVehicle/<%= vehicle.id %>"
-                              class="btn btn-sm bg-danger-light"
-                            >
-                              <i class="feather-edit"></i>
-                            </a>
+                          <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                              <label>Vehicle Model <span class="login-danger">*</span></label>
+                              <input type="text" name="model" required class="form-control" placeholder="Enter model" value="<%= vehicle ? vehicle.model : '' %>" />
+                            </div>
                           </div>
-                        </td>
-                      </tr>
-                      <% }); %>
-                    </tbody>
-                  </table>
-                  </div>
+                          <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                              <label>Vehicle Year <span class="login-danger">*</span></label>
+                              <input type="text" name="makeYear" required class="form-control" placeholder="Enter year" value="<%= vehicle ? vehicle.makeYear : '' %>" />
+                            </div>
+                          </div>
+                          <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                              <label>Vehicle Color <span class="login-danger">*</span></label>
+                              <input type="text" name="color" required class="form-control" placeholder="Enter color" value="<%= vehicle ? vehicle.color : '' %>" />
+                            </div>
+                          </div>
+                          <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                              <label>Pollution Number <span class="login-danger">*</span></label>
+                              <input type="text" name="pollutionCertificateNumber" required class="form-control" placeholder="Enter pollution Certificate Number" value="<%= vehicle ? vehicle.pollutionCertificateNumber : '' %>" />
+                            </div>
+                          </div>
+                          <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms calendar-icon">
+                              <label>Pollution Validity <span class="login-danger">*</span></label>
+                              <input type="text" name="pollutionValidity" required class="form-control datetimepicker" placeholder="DD-MM-YYYY" value="<%= vehicle ? vehicle.pollutionValidity : '' %>" />
+                            </div>
+                          </div>
+                          <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms calendar-icon">
+                              <label>Registration Date <span class="login-danger">*</span></label>
+                              <input type="text" name="registrationDate" required class="form-control datetimepicker" placeholder="DD-MM-YYYY" value="<%= vehicle ? vehicle.registrationDate : '' %>" />
+                            </div>
+                          </div>
+                      
+                          <div class="col-12">
+                            <div class="student-submit">
+                              <button type="submit" class="btn btn-primary"><%= vehicle ? 'Update' : 'Submit' %></button>
+                              <% if(vehicle) { %>
+                                <a href="/admin/vehicles" class="btn btn-secondary">Cancel</a>
+                              <% } %>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                  
                 </div>
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
 
-    <script src="assets/js/jquery-3.6.0.min.js"></script>
+    <script src="/assets/js/jquery-3.6.0.min.js"></script>
 
-    <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <script src="assets/js/feather.min.js"></script>
+    <script src="/assets/js/feather.min.js"></script>
 
-    <script src="assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
-    <script src="assets/plugins/datatables/datatables.min.js"></script>
+    <script src="/assets/plugins/select2/js/select2.min.js"></script>
 
-    <script src="assets/js/script.js"></script>
+    <script src="/assets/plugins/moment/moment.min.js"></script>
+    <script src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+
+    <script src="/assets/js/script.js"></script>
   </body>
 </html>
