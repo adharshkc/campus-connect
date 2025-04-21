@@ -6,6 +6,7 @@ const {
   getDepById,
   depDelete,
 } = require("../services/department");
+const { getAllEvents, createEvent, getEventById, delEvent } = require("../services/event");
 const { reportDelete, getAllReports } = require("../services/report");
 const {
   getAllStaffs,
@@ -15,7 +16,13 @@ const {
   editStaff,
 } = require("../services/staff");
 const { getAllStudents } = require("../services/student");
-const { getAllVehicles, createVehicle, getVehicleById, editVeh, delVehicle } = require("../services/vehicles");
+const {
+  getAllVehicles,
+  createVehicle,
+  getVehicleById,
+  editVeh,
+  delVehicle,
+} = require("../services/vehicles");
 
 const getAdminDashboard = async (req, res, next) => {
   try {
@@ -255,21 +262,20 @@ const addVehicle = async (req, res) => {
     pollutionCertificateNumber,
     pollutionValidity,
     registrationDate,
-  }
-  await createVehicle(vehicle)
-  res.redirect("/admin/vehicles")
+  };
+  await createVehicle(vehicle);
+  res.redirect("/admin/vehicles");
 };
 
-const getEditVehicle = async (req, res)=>{
+const getEditVehicle = async (req, res) => {
   const { userId } = req.session;
-  const {id} = req.params
+  const { id } = req.params;
   const admin = getAdmin(userId);
   const vehicle = await getVehicleById(parseInt(id));
-  res.render("edit-vehicle", {admin, vehicle})
-}
+  res.render("edit-vehicle", { admin, vehicle });
+};
 
-
-const editVehicle = async(req, res)=>{
+const editVehicle = async (req, res) => {
   const {
     id,
     vehicleNumber,
@@ -290,17 +296,52 @@ const editVehicle = async(req, res)=>{
     pollutionCertificateNumber,
     pollutionValidity,
     registrationDate,
-  }
-  await editVeh(vehicle)
-  res.redirect("/admin/vehicles")
-}
+  };
+  await editVeh(vehicle);
+  res.redirect("/admin/vehicles");
+};
 
+const deleteVehicle = async (req, res) => {
+  const { id } = req.params;
+  await delVehicle(parseInt(id));
+  res.redirect("/admin/vehicles");
+};
 
+const getAdminEvents = async (req, res) => {
+  const { userId, role } = req.session;
+  const events = await getAllEvents();
+  const admin = await getAdmin(userId);
+  res.render("adminEventDashboard", { admin, events });
+};
 
-const deleteVehicle = async(req , res)=>{
+const getAddEvent = async (req, res) => {
+  const { userId, role } = req.session;
+  const { id } = req.params;
+  const admin = getAdmin(userId);
+  res.render("add-event", { admin });
+};
+
+const getEditEvent = async (req, res) => {
+  const { id } = req.params;
+  const { userId, role } = req.session;
+  const admin = getAdmin(userId);
+  const event = await getEventById(id);
+  res.render("edit-event", { admin, event });
+};
+
+const addEvent = async (req, res) => {
+  const { title, description, startDate, endDate, location, type } = req.body;
+  const event = { title, description, startDate, endDate, location, type };
+  console.log(event)
+  await createEvent(event)
+  res.redirect('/admin/events')
+};
+
+const deleteEvent = async(req, res)=>{
   const {id} = req.params;
-  await delVehicle(parseInt(id))
-  res.redirect("/admin/vehicles")
+  await delEvent(parseInt(id))
+  res.redirect('/admin/events')
+
 }
 
 module.exports = {
@@ -325,5 +366,10 @@ module.exports = {
   addVehicle,
   getEditVehicle,
   editVehicle,
-  deleteVehicle
+  deleteVehicle,
+  getAdminEvents,
+  getAddEvent,
+  getEditEvent,
+  addEvent,
+  deleteEvent
 };

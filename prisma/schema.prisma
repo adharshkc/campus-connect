@@ -26,9 +26,9 @@ model User {
   issuedDisciplinaryActions DisciplinaryAction[]   @relation("DisciplinaryIssuer")
   disciplinaryActions       DisciplinaryAction[]   @relation("DisciplinarySubject")
   discussionReplies         DiscussionReply[]
-  eventFeedback             EventFeedback[]
+  // eventFeedback             EventFeedback[]
   eventRegistrations        EventRegistration[]
-  createdEvents             Event[]                @relation("EventCreator")
+  // createdEvents             Event[]                @relation("EventCreator")
   reviewedLeaves            LeaveRequest[]         @relation("LeaveReviewer")
   leaveRequests             LeaveRequest[]         @relation("LeaveRequester")
   notifications             Notification[]
@@ -41,16 +41,16 @@ model User {
   @@map("users")
 }
 
-model EventType {
-  id          Int      @id @default(autoincrement()) @map("type_id")
-  name        String
-  description String?
-  isActive    Boolean  @default(true) @map("is_active")
-  createdAt   DateTime @default(now()) @map("created_at")
-  events      Event[]
+// model EventType {
+//   id          Int      @id @default(autoincrement()) @map("type_id")
+//   name        String
+//   description String?
+//   isActive    Boolean  @default(true) @map("is_active")
+//   createdAt   DateTime @default(now()) @map("created_at")
+//   events      Event[]
 
-  @@map("event_types")
-}
+//   @@map("event_types")
+// }
 
 model DisciplinaryActionType {
   id                  Int                  @id @default(autoincrement()) @map("type_id")
@@ -131,19 +131,18 @@ model Event {
   id              Int                 @id @default(autoincrement()) @map("event_id")
   title           String
   description     String?
-  eventTypeId     Int                 @map("event_type_id")
+  type            String?
   startDatetime   DateTime            @map("start_datetime")
   endDatetime     DateTime            @map("end_datetime")
   location        String?
-  maxParticipants Int?                @map("max_participants")
-  createdBy       Int                 @map("created_by")
-  isPublished     Boolean             @default(false) @map("is_published")
+  // maxParticipants Int?                @map("max_participants")
+  // createdBy       Int                 @map("created_by")
+  isPublished     Boolean             @default(true) @map("is_published")
   createdAt       DateTime            @default(now()) @map("created_at")
   updatedAt       DateTime            @default(now()) @map("updated_at")
-  feedback        EventFeedback[]
+  // feedback        EventFeedback[]
   registrations   EventRegistration[]
-  creator         User                @relation("EventCreator", fields: [createdBy], references: [id])
-  eventType       EventType           @relation(fields: [eventTypeId], references: [id])
+  // creator         User                @relation("EventCreator", fields: [createdBy], references: [id])
 
   @@map("events")
 }
@@ -162,19 +161,19 @@ model EventRegistration {
   @@map("event_registrations")
 }
 
-model EventFeedback {
-  id           Int      @id @default(autoincrement()) @map("feedback_id")
-  eventId      Int      @map("event_id")
-  userId       Int      @map("user_id")
-  rating       Int?
-  feedbackText String?  @map("feedback_text")
-  isAnonymous  Boolean  @default(false) @map("is_anonymous")
-  submittedAt  DateTime @default(now()) @map("submitted_at")
-  event        Event    @relation(fields: [eventId], references: [id])
-  user         User     @relation(fields: [userId], references: [id])
+// model EventFeedback {
+//   id           Int      @id @default(autoincrement()) @map("feedback_id")
+//   eventId      Int      @map("event_id")
+//   userId       Int      @map("user_id")
+//   rating       Int?
+//   feedbackText String?  @map("feedback_text")
+//   isAnonymous  Boolean  @default(false) @map("is_anonymous")
+//   submittedAt  DateTime @default(now()) @map("submitted_at")
+//   event        Event    @relation(fields: [eventId], references: [id])
+//   user         User     @relation(fields: [userId], references: [id])
 
-  @@map("event_feedback")
-}
+//   @@map("event_feedback")
+// }
 
 model Complaint {
   id              Int             @id @default(autoincrement()) @map("complaint_id")

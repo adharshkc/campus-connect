@@ -22,6 +22,11 @@ const {
   getEditVehicle,
   editVehicle,
   deleteVehicle,
+  getAdminEvents,
+  getAddEvent,
+  getEditEvent,
+  addEvent,
+  deleteEvent,
 } = require("../controllers/adminController");
 const { isAdmin } = require("../middlewares/authentication");
 const router = express.Router();
@@ -48,5 +53,12 @@ router.post("/admin/addVehicle", isAdmin, addVehicle )
 router.get("/admin/editVehicle/:id", isAdmin, getEditVehicle)
 router.post("/admin/editVehicle", isAdmin, editVehicle)
 router.get("/admin/deleteVehicle/:id", isAdmin, deleteVehicle)
+router.get("/admin/events", isAdmin, getAdminEvents)
+router.get('/admin/addEvent', isAdmin, getAddEvent)
+router.get('/admin/editEvent/:id', isAdmin, getEditEvent)
+router.post('/admin/addEvent', isAdmin, addEvent)
+// router.post('/admin/editEvent', isAdmin, editEvent)
+router.get('/admin/deleteEvent/:id', isAdmin, deleteEvent)
+
 
 module.exports = router;
