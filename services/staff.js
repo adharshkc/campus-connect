@@ -136,5 +136,16 @@ module.exports = {
       }
     })
     return staff
-  }
+  },
+  async getStaffByUserId(id){
+    const staff = await prisma.staffProfile.findUnique({
+      where:{
+        userId:parseInt(id)
+      },include:{
+        user:true,
+        department:true
+      }
+    })
+    return staff
+  },
 };

@@ -15,14 +15,14 @@ module.exports = {
   
   isStaff: (req, res, next) => {
     if (req.session.role !== 'staff') {
-      return res.status(403).send('Access denied');
+      return res.redirect('/login')
     }
     next();
   },
   
   isStudent: (req, res, next) => {
     if (req.session.role !== 'student') {
-      return res.status(403).send('Access denied');
+      return res.redirect('/login')
     }
     next();
   },

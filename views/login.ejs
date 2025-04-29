@@ -43,16 +43,14 @@
             <div class="login-right">
               <div class="login-right-wrap">
                 <h1>Welcome to NTTF</h1>
-                <p class="account-subtitle">
+                <!-- <p class="account-subtitle">
                   Need an account? <a href="register.html">Sign Up</a>
-                </p>
+                </p> -->
                 <h2>Sign in</h2>
-                <% if (typeof error !== 'undefined') { %>
-                    <div class=""><%= error %></div>
-                  <% } %>
-                  <!-- <% if (error) { %>
-                    <div class="alert alert-danger"><%= error %></div>
-                  <% } %> -->
+                
+                <% if (error) { %>
+                  <div class="alert alert-danger"><%= error %></div>
+                <% } %>                
                 <form action="/login" method="POST">
                   <div class="form-group">
                     <label>Username <span class="login-danger">*</span></label>

@@ -1,3 +1,4 @@
+const prisma = require("../prisma/client");
 const authService = require("../services/auth");
 
 
@@ -7,8 +8,10 @@ const login = async (req, res, next) => {
   try {
     const { username, password } = req.body;
     console.log(username, password)
-    const user = await authService.loginUser(username, password);
-    console.log(user)
+    const user = await await prisma.user.findUnique({ where: { username } });
+    if(!user) {
+      return res.render('login', { error: 'Invalid username or password' });
+    }
     req.session.userId = user.id;
     req.session.role = user.userType;
     switch(user.userType) {

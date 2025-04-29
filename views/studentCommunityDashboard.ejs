@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=0"
+    />
+    <title>Community Chat</title>
+
+    <link rel="shortcut icon" href="/assets/img/favicon.png" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="/assets/plugins/bootstrap/css/bootstrap.min.css"
+    />
+
+    <link rel="stylesheet" href="/assets/plugins/feather/feather.css" />
+
+    <link rel="stylesheet" href="/assets/plugins/icons/flags/flags.css" />
+
+    <link
+      rel="stylesheet"
+      href="/assets/plugins/fontawesome/css/fontawesome.min.css"
+    />
+    <link rel="stylesheet" href="/assets/plugins/fontawesome/css/all.min.css" />
+
+    <link
+      rel="stylesheet"
+      href="/assets/plugins/datatables/datatables.min.css"
+    />
+
+    <link rel="stylesheet" href="/assets/css/style.css" />
+
+    <link rel="stylesheet" href="/assets/css/chat.css" />
+  </head>
+  <body>
+    <div class="main-wrapper">
+      <div class="header">
+        <div class="header-left">
+          <a href="/student" class="logo">
+            <img src="/assets/img/logo.png" alt="Logo" />
+          </a>
+          <a href="/student" class="logo logo-small">
+            <img
+              src="/assets/img/logo-small.png"
+              alt="Logo"
+              width="30"
+              height="30"
+            />
+          </a>
+        </div>
+
+        <div class="menu-toggle">
+          <a href="javascript:void(0);" id="toggle_btn">
+            <i class="fas fa-bars"></i>
+          </a>
+        </div>
+
+        <div class="top-nav-search">
+          <form>
+            <input type="text" class="form-control" placeholder="Search here" />
+            <button class="btn" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+        </div>
+
+        <a class="mobile_btn" id="mobile_btn">
+          <i class="fas fa-bars"></i>
+        </a>
+
+        <ul class="nav user-menu">
+          <li class="nav-item dropdown has-arrow new-user-menus">
+            <a
+              href="#"
+              class="dropdown-toggle nav-link"
+              data-bs-toggle="dropdown"
+            >
+              <span class="user-img">
+                <img
+                  class="rounded-circle"
+                  src="/assets/img/profiles/avatar-01.jpg"
+                  width="31"
+                  alt="img"
+                />
+                <div class="user-text">
+                  <h6>John Doe</h6>
+                  <p class="text-muted mb-0">Student</p>
+                </div>
+              </span>
+            </a>
+            <div class="dropdown-menu">
+              <div class="user-header">
+                <div class="avatar avatar-sm">
+                  <img
+                    src="/assets/img/profiles/avatar-01.jpg"
+                    alt="User Image"
+                    class="avatar-img rounded-circle"
+                  />
+                </div>
+                <div class="user-text">
+                  <h6>John Doe</h6>
+                  <p class="text-muted mb-0">Student</p>
+                </div>
+              </div>
+              <a class="dropdown-item" href="#">My Profile</a>
+              <a class="dropdown-item" href="/logout">Logout</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar" id="sidebar">
+        <div class="sidebar-inner slimscroll">
+          <div id="sidebar-menu" class="sidebar-menu">
+            <ul>
+              <li class="menu-title">
+                <span>Main Menu</span>
+              </li>
+              <li class="submenu">
+                <a href="/student/dashboard"
+                  ><i class="feather-grid"></i> <span> Dashboard</span>
+                </a>
+              </li>
+              <li class="submenu">
+                <a href="/student/attendance"
+                  ><i class="fas fa-graduation-cap"></i>
+                  <span> Attendance</span> <span class="menu-arrow"></span
+                ></a>
+              </li>
+              <li class="submenu">
+                <a href="/student/teacher"
+                  ><i class="fas fa-chalkboard-teacher"></i>
+                  <span> Teachers</span> <span class="menu-arrow"></span
+                ></a>
+              </li>
+              <li class="submenu">
+                <a href="/student/subject"
+                  ><i class="fas fa-book-reader"></i> <span> Subjects</span>
+                  <span class="menu-arrow"></span
+                ></a>
+              </li>
+              <li>
+                <a href="/student/event"
+                  ><i class="fas fa-calendar-day"></i> <span>Events</span></a
+                >
+              </li>
+              <li>
+                <a href="/student/vehicle"
+                  ><i class="fas fa-bus"></i> <span>Vehicle</span></a
+                >
+              </li>
+              <li class="">
+                <a href="/student/complaints"
+                  ><i class="fas fa-book"></i> <span>Have Complaints?</span></a
+                >
+              </li>
+              <li class="active">
+                <a href="/student/community"
+                  ><i class="fas fa-users"></i> <span>Community</span></a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-wrapper">
+        <div class="content container-fluid">
+          <div class="page-header">
+            <div class="row align-items-center"></div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <div class="chat-container">
+                <div class="row g-0 h-100">
+                  <!-- Chat Main Content -->
+                  <div class="col-lg-8 col-md-7 chat-main">
+                    <!-- Chat Header -->
+                    <div
+                      class="chat-header d-flex justify-content-between align-items-center"
+                    >
+                      <div class="d-flex align-items-center"></div>
+                    </div>
+
+                    <!-- Chat Body -->
+                    <div class="chat-body">
+                        <% messages.forEach(msg => { %>
+                          <% if (msg.userId === student.id) { %>
+                            <!-- Outgoing Message -->
+                            <div class="message message-outgoing">
+                              <div class="message-content"><%= msg.content %></div>
+                              <div class="message-meta">You • <%= new Date(msg.createdAt).toLocaleTimeString() %></div>
+                            </div>
+                          <% } else { %>
+                            <!-- Incoming Message -->
+                            <div class="message message-incoming">
+                              <div class="d-flex">
+                                <div class="chat-avatar d-flex align-items-center justify-content-center">
+                                    <%= msg.user.username.toUpperCase() %>
+                                  </div>
+                                <div class="flex-grow-1 ms-2">
+                                  <div class="message-content"><%= msg.content %></div>
+                                  <div class="message-meta"><%= msg.user.name %> • <%= new Date(msg.createdAt).toLocaleTimeString() %></div>
+                                </div>
+                              </div>
+                            </div>
+                          <% } %>
+                        <% }) %>
+                      </div>
+                      
+
+                    <!-- Chat Footer -->
+                    <div class="chat-footer">
+                        <form action="/student/community" method="POST">
+                            <div class="position-relative">
+                              <input
+                                name="content"
+                                type="text"
+                                class="form-control chat-input"
+                                placeholder="Type a message..."
+                                required
+                              />
+                              <div
+                                class="position-absolute top-50 end-0 translate-middle-y d-flex"
+                              >
+                                <button type="submit" class="btn btn-primary rounded-circle chat-send-btn">
+                                  <i class="fas fa-paper-plane"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </form>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

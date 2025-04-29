@@ -39,187 +39,158 @@
   </head>
   <body>
     <div class="main-wrapper">
-      <div class="header">
-        <div class="header-left">
-          <a href="/admin/dashboard" class="logo">
-            <img src="/assets/img/logo.png" alt="Logo" />
-          </a>
-          <a href="/admin/dashboard" class="logo logo-small">
-            <img
-              src="/assets/img/logo-small.png"
-              alt="Logo"
-              width="30"
-              height="30"
-            />
-          </a>
-        </div>
-        <div class="menu-toggle">
-          <a href="javascript:void(0);" id="toggle_btn">
-            <i class="fas fa-bars"></i>
-          </a>
-        </div>
-
-        <div class="top-nav-search">
-          <form>
-            <input type="text" class="form-control" placeholder="Search here" />
-            <button class="btn" type="submit">
-              <i class="fas fa-search"></i>
-            </button>
-          </form>
-        </div>
-        <a class="mobile_btn" id="mobile_btn">
-          <i class="fas fa-bars"></i>
-        </a>
-
-        <ul class="nav user-menu">
-          <li class="nav-item dropdown noti-dropdown language-drop me-2">
-            <a
-              href="#"
-              class="dropdown-toggle nav-link header-nav-list"
-              data-bs-toggle="dropdown"
-            >
-              <img src="assets/img/icons/header-icon-01.svg" alt="" />
-            </a>
-            <div class="dropdown-menu">
-              <div class="noti-content">
-                <div>
-                  <a class="dropdown-item" href="javascript:;"
-                    ><i class="flag flag-lr me-2"></i>English</a
-                  >
-                  <a class="dropdown-item" href="javascript:;"
-                    ><i class="flag flag-bl me-2"></i>Francais</a
-                  >
-                  <a class="dropdown-item" href="javascript:;"
-                    ><i class="flag flag-cn me-2"></i>Turkce</a
-                  >
-                </div>
-              </div>
-            </div>
-          </li>
-
-          <li class="nav-item zoom-screen me-2">
-            <a href="#" class="nav-link header-nav-list win-maximize">
-              <img src="assets/img/icons/header-icon-04.svg" alt="" />
-            </a>
-          </li>
-
-          <li class="nav-item dropdown has-arrow new-user-menus">
-            <a
-              href="#"
-              class="dropdown-toggle nav-link"
-              data-bs-toggle="dropdown"
-            >
-              <span class="user-img">
+        <div class="header">
+            <div class="header-left">
+              <a href="/student" class="logo">
+                <img src="/assets/img/logo.png" alt="Logo" />
+              </a>
+              <a href="/student" class="logo logo-small">
                 <img
-                  class="rounded-circle"
-                  src="/assets/img/profiles/avatar-01.jpg"
-                  width="31"
-                  alt="Soeng Souy"
+                  src="/assets/img/logo-small.png"
+                  alt="Logo"
+                  width="30"
+                  height="30"
                 />
-                <div class="user-text">
-                  <h6><%= admin.username %></h6>
-                  <p class="text-muted mb-0">Administrator</p>
-                </div>
-              </span>
-            </a>
-            <div class="dropdown-menu">
-              <div class="user-header">
-                <div class="avatar avatar-sm">
-                  <img
-                    src="/assets/img/profiles/avatar-01.jpg"
-                    alt="User Image"
-                    class="avatar-img rounded-circle"
-                  />
-                </div>
-                <div class="user-text">
-                  <h6><%= admin.username %></h6>
-                  <p class="text-muted mb-0">Administrator</p>
-                </div>
-              </div>
-              <a class="dropdown-item" href="/profile">My Profile</a>
-              <!-- <a class="dropdown-item" href="inbox.html">Inbox</a> -->
-              <a class="dropdown-item" href="/login">Logout</a>
+              </a>
             </div>
-          </li>
-        </ul>
-      </div>
-
-      <div class="sidebar" id="sidebar">
-        <div class="sidebar-inner slimscroll">
-          <div id="sidebar-menu" class="sidebar-menu">
-            <ul>
-              <li class="menu-title">
-                <span>Main Menu</span>
+    
+            <div class="menu-toggle">
+              <a href="javascript:void(0);" id="toggle_btn">
+                <i class="fas fa-bars"></i>
+              </a>
+            </div>
+    
+            <div class="top-nav-search">
+              <form>
+                <input type="text" class="form-control" placeholder="Search here" />
+                <button class="btn" type="submit">
+                  <i class="fas fa-search"></i>
+                </button>
+              </form>
+            </div>
+    
+            <a class="mobile_btn" id="mobile_btn">
+              <i class="fas fa-bars"></i>
+            </a>
+    
+            <ul class="nav user-menu">
+    
+              <li class="nav-item zoom-screen me-2">
+                <a href="#" class="nav-link header-nav-list">
+                  <img src="/assets/img/icons/header-icon-04.svg" alt="" />
+                </a>
               </li>
-              <li class="submen">
-                <a href="/admin/dashboard"
-                  ><i class="feather-grid"></i> <span> Dashboard</span>
-                  <span class="menu-arrow"></span
-                ></a>
+    
+              <li class="nav-item dropdown has-arrow new-user-menus">
+                <a
+                  href="#"
+                  class="dropdown-toggle nav-link"
+                  data-bs-toggle="dropdown"
+                >
+                  <span class="user-img">
+                    <img
+                      class="rounded-circle"
+                      src="/assets/img/profiles/avatar-01.jpg"
+                      width="31"
+                      alt="img"
+                    />
+                    <div class="user-text">
+                      <h6><%=student.username%></h6>
+                      <p class="text-muted mb-0">Student</p>
+                    </div>
+                  </span>
+                </a>
+                <div class="dropdown-menu">
+                  <div class="user-header">
+                    <div class="avatar avatar-sm">
+                      <img
+                        src="/assets/img/profiles/avatar-01.jpg"
+                        alt="User Image"
+                        class="avatar-img rounded-circle"
+                      />
+                    </div>
+                    <div class="user-text">
+                      <h6><%=student.username%></h6>
+                      <p class="text-muted mb-0">Student</p>
+                    </div>
+                  </div>
+                  <a class="dropdown-item" href="profile.html">My Profile</a>
+                  <!-- <a class="dropdown-item" href="inbox.html">Inbox</a> -->
+                  <a class="dropdown-item" href="/logout">Logout</a>
+                </div>
               </li>
-              <li class="submen ">
-                <a href="/admin/students"
-                  ><i class="fas fa-graduation-cap"></i> <span> Students</span>
-                  <span class="menu-arrow"></span
-                ></a>
-                <!-- <ul>
+            </ul>
+          </div>
+    
+          <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+              <div id="sidebar-menu" class="sidebar-menu">
+                <ul>
+                    <li class="menu-title">
+                        <span>Main Menu</span>
+                    </li>
+                    <li class="submen ">
+                        <a href="/student/dashboard"><i class="feather-grid"></i> <span> Dashboard</span>
+                           <!-- <span
+                                class="menu-arrow"></span> -->
+                              </a>
+                        <!-- <ul>
+                            <li><a href="index.html" >Admin Dashboard</a></li>
+                            <li><a href="teacher-dashboard.html">Teacher Dashboard</a></li>
+                            <li><a href="student-dashboard.html" class="active">Student Dashboard</a></li>
+                        </ul> -->
+                    </li>
+                    <li class="submen">
+                        <a href="/student/attendance"><i class="fas fa-graduation-cap"></i> <span> Attendance</span> <span
+                                class="menu-arrow"></span></a>
+                        <!-- <ul>
                             <li><a href="students.html">Student List</a></li>
                             <li><a href="student-details.html">Student View</a></li>
-                            <li><a href="add-student.html">Student Add</a></li>
+                            <li><a href="add-student.html" >Student Add</a></li>
                             <li><a href="edit-student.html">Student Edit</a></li>
                         </ul> -->
-              </li>
-              <li class="submen">
-                <a href="/admin/teachers"
-                  ><i class="fas fa-chalkboard-teacher"></i>
-                  <span> Teachers</span> <span class="menu-arrow"></span
-                ></a>
-                <!-- <ul>
+                    </li>
+                    <li class="submen ">
+                        <a href="/student/teacher"><i class="fas fa-chalkboard-teacher"></i> <span> Teachers</span> <span
+                                class="menu-arrow"></span></a>
+                        <!-- <ul>
                             <li><a href="teachers.html">Teacher List</a></li>
                             <li><a href="teacher-details.html">Teacher View</a></li>
                             <li><a href="add-teacher.html">Teacher Add</a></li>
                             <li><a href="edit-teacher.html">Teacher Edit</a></li>
                         </ul> -->
-              </li>
-              <li class="submen ">
-                <a href="/admin/departments"
-                  ><i class="fas fa-building"></i> <span> Departments</span>
-                  <span class="menu-arrow"></span
-                ></a>
-                <!-- <ul>
-                            <li><a href="departments.html">Department List</a></li>
-                            <li><a href="add-department.html">Department Add</a></li>
-                            <li><a href="edit-department.html">Department Edit</a></li>
-                        </ul> -->
-              </li>
-              <li class="submen">
-                <a href="/admin/reports"
-                  ><i class="fas fa-book-reader"></i> <span> Reportings</span>
-                  <span class="menu-arrow"></span
-                ></a>
-                <!-- <ul>
+                    </li>
+                    <!-- <li class="submen">
+                        <a href="#"><i class="fas fa-building"></i> <span> Departments</span> <span
+                                class="menu-arrow"></span></a>
+                    </li> -->
+                    <li class="submen">
+                        <a href="/student/subject"><i class="fas fa-book-reader"></i> <span> Subjects</span> <span
+                                class="menu-arrow"></span></a>
+                        <ul>
                             <li><a href="subjects.html">Subject List</a></li>
                             <li><a href="add-subject.html">Subject Add</a></li>
                             <li><a href="edit-subject.html">Subject Edit</a></li>
-                        </ul> -->
-              </li>
-              <li class="active">
-                <a href="/admin/vehicles"
-                  ><i class="fas fa-holly-berry"></i> <span>Vehicles</span></a
-                >
-              </li>
-              <li>
-                <a href="/admin/events"
-                  ><i class="fas fa-calendar-day"></i> <span>Events</span></a
-                >
-              </li>
-              <li>
-                <a href="/admin/subjects"><i class="fas fa-calendar-day"></i> <span>Subjects</span></a>
-            </li>
-            </ul>
+                        </ul>
+                    </li>
+                    <!-- <li>
+                        <a href="holiday.html"><i class="fas fa-holly-berry"></i> <span>Holiday</span></a>
+                    </li> -->
+                    <li >
+                        <a href="/student/event"><i class="fas fa-calendar-day"></i> <span>Events</span></a>
+                    </li>
+                    <li class="active">
+                        <a href="/student/vehicle"><i class="fas fa-bus"></i> <span>Vehicle</span></a>
+                    </li>
+                    <li>
+                      <a href="/student/complaints"
+                        ><i class="fas fa-book"></i> <span>Have Complaints?</span></a
+                      >
+                    </li>
+                </ul>
+            </div>
+            </div>
           </div>
-        </div>
-      </div>
 
       <div class="page-wrapper">
         <div class="content container-fluid">
@@ -245,7 +216,7 @@
                   <div class="page-header">
                     <div class="row align-items-center">
                       <div class="col">
-                        <h3 class="page-title">Departments</h3>
+                        <h3 class="page-title">Vehicles</h3>
                       </div>
                       <div
                         class="col-auto text-end float-end ms-auto download-grp"
@@ -263,9 +234,9 @@
                         <!-- <a href="#" class="btn btn-outline-primary me-2"
                           ><i class="fas fa-download"></i> Download</a
                         > -->
-                        <a href="/admin/addVehicle" class="btn btn-primary"
+                        <!-- <a href="/admin/addVehicle" class="btn btn-primary"
                           ><i class="fas fa-plus"></i
-                        ></a>
+                        ></a> -->
                       </div>
                     </div>
                   </div>
@@ -293,7 +264,7 @@
                         <th>Pollution Number</th>
                         <th>Pollution Validity</th>
                         <th>Reg Date</th>
-                        <th class="text-end">Action</th>
+                        <!-- <th class="text-end">Action</th> -->
                       </tr>
                     </thead>
                     <tbody>
@@ -332,7 +303,7 @@
                         <td>
                             <%= new Date(vehicle.registrationDate).toLocaleDateString('en-GB') %>
                           </td> 
-                        <td class="text-end">
+                        <!-- <td class="text-end">
                           <div class="actions">
                             <a
                               href="/admin/deleteVehicle/<%= vehicle.id %>"
@@ -347,7 +318,7 @@
                               <i class="feather-edit"></i>
                             </a>
                           </div>
-                        </td>
+                        </td> -->
                       </tr>
                       <% }); %>
                     </tbody>

@@ -8,7 +8,7 @@
     />
     <title>Campus-Connect - Dashboard</title>
 
-    <link rel="shortcut icon" href="assets/img/favicon.png" />
+    <link rel="shortcut icon" href="/assets/img/favicon.png" />
 
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700&display=swap"
@@ -17,36 +17,39 @@
 
     <link
       rel="stylesheet"
-      href="assets/plugins/bootstrap/css/bootstrap.min.css"
+      href="/assets/plugins/bootstrap/css/bootstrap.min.css"
     />
 
-    <link rel="stylesheet" href="assets/plugins/feather/feather.css" />
+    <link rel="stylesheet" href="/assets/plugins/feather/feather.css" />
 
-    <link rel="stylesheet" href="assets/plugins/icons/flags/flags.css" />
+    <link rel="stylesheet" href="/assets/plugins/icons/flags/flags.css" />
 
     <link
       rel="stylesheet"
-      href="assets/plugins/fontawesome/css/fontawesome.min.css"
+      href="/assets/plugins/fontawesome/css/fontawesome.min.css"
     />
-    <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" href="/assets/plugins/fontawesome/css/all.min.css" />
 
     <link
       rel="stylesheet"
-      href="assets/plugins/simple-calendar/simple-calendar.css"
+      href="/assets/plugins/simple-calendar/simple-calendar.css"
     />
 
-    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="/assets/css/custom.css"/>
   </head>
   <body>
     <div class="main-wrapper">
       <div class="header">
         <div class="header-left">
           <a href="/student" class="logo">
-            <img src="assets/img/logo.png" alt="Logo" />
+            <img src="/assets/img/logo.png" alt="Logo" />
           </a>
           <a href="/student" class="logo logo-small">
             <img
-              src="assets/img/logo-small.png"
+              src="/assets/img/logo-small.png"
               alt="Logo"
               width="30"
               height="30"
@@ -77,7 +80,7 @@
 
           <li class="nav-item zoom-screen me-2">
             <a href="#" class="nav-link header-nav-list">
-              <img src="assets/img/icons/header-icon-04.svg" alt="" />
+              <img src="/assets/img/icons/header-icon-04.svg" alt="" />
             </a>
           </li>
 
@@ -90,12 +93,12 @@
               <span class="user-img">
                 <img
                   class="rounded-circle"
-                  src="assets/img/profiles/avatar-01.jpg"
+                  src="/assets/img/profiles/avatar-01.jpg"
                   width="31"
-                  alt="Rithwik"
+                  alt="img"
                 />
                 <div class="user-text">
-                  <h6>Rithwik</h6>
+                  <h6><%=student.username%></h6>
                   <p class="text-muted mb-0">Student</p>
                 </div>
               </span>
@@ -104,13 +107,95 @@
               <div class="user-header">
                 <div class="avatar avatar-sm">
                   <img
-                    src="assets/img/profiles/avatar-01.jpg"
+                    src="/assets/img/profiles/avatar-01.jpg"
                     alt="User Image"
                     class="avatar-img rounded-circle"
                   />
                 </div>
                 <div class="user-text">
-                  <h6>Rithwik</h6>
+                  <h6><%=student.username%></h6>
+                  <p class="text-muted mb-0">Student</p>
+                </div>
+              </div>
+              <a class="dropdown-item" href="profile.html">My Profile</a>
+              <!-- <a class="dropdown-item" href="inbox.html">Inbox</a> -->
+              <a class="dropdown-item" href="/logout">Logout</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="header">
+        <div class="header-left">
+          <a href="/student" class="logo">
+            <img src="/assets/img/logo.png" alt="Logo" />
+          </a>
+          <a href="/student" class="logo logo-small">
+            <img
+              src="/assets/img/logo-small.png"
+              alt="Logo"
+              width="30"
+              height="30"
+            />
+          </a>
+        </div>
+
+        <div class="menu-toggle">
+          <a href="javascript:void(0);" id="toggle_btn">
+            <i class="fas fa-bars"></i>
+          </a>
+        </div>
+
+        <div class="top-nav-search">
+          <form>
+            <input type="text" class="form-control" placeholder="Search here" />
+            <button class="btn" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+        </div>
+
+        <a class="mobile_btn" id="mobile_btn">
+          <i class="fas fa-bars"></i>
+        </a>
+
+        <ul class="nav user-menu">
+          <li class="nav-item zoom-screen me-2">
+            <a href="#" class="nav-link header-nav-list">
+              <img src="/assets/img/icons/header-icon-04.svg" alt="" />
+            </a>
+          </li>
+
+          <li class="nav-item dropdown has-arrow new-user-menus">
+            <a
+              href="#"
+              class="dropdown-toggle nav-link"
+              data-bs-toggle="dropdown"
+            >
+              <span class="user-img">
+                <img
+                  class="rounded-circle"
+                  src="/assets/img/profiles/avatar-01.jpg"
+                  width="31"
+                  alt="img"
+                />
+                <div class="user-text">
+                  <h6><%=student.username%></h6>
+                  <p class="text-muted mb-0">Student</p>
+                </div>
+              </span>
+            </a>
+            <div class="dropdown-menu">
+              <div class="user-header">
+                <div class="avatar avatar-sm">
+                  <img
+                    src="/assets/img/profiles/avatar-01.jpg"
+                    alt="User Image"
+                    class="avatar-img rounded-circle"
+                  />
+                </div>
+                <div class="user-text">
+                  <h6><%=student.username%></h6>
                   <p class="text-muted mb-0">Student</p>
                 </div>
               </div>
@@ -126,71 +211,80 @@
         <div class="sidebar-inner slimscroll">
           <div id="sidebar-menu" class="sidebar-menu">
             <ul>
-                <li class="menu-title">
-                    <span>Main Menu</span>
-                </li>
-                <li class="submenu active">
-                    <a href="#"><i class="feather-grid"></i> <span> Dashboard</span>
-                       <!-- <span
+              <li class="menu-title">
+                <span>Main Menu</span>
+              </li>
+              <li class="submen active">
+                <a href="/student/dashboard"
+                  ><i class="feather-grid"></i> <span> Dashboard</span>
+                  <!-- <span
                             class="menu-arrow"></span> -->
-                          </a>
-                    <!-- <ul>
+                </a>
+                <!-- <ul>
                         <li><a href="index.html" >Admin Dashboard</a></li>
                         <li><a href="teacher-dashboard.html">Teacher Dashboard</a></li>
                         <li><a href="student-dashboard.html" class="active">Student Dashboard</a></li>
                     </ul> -->
-                </li>
-                <li class="submenu">
-                    <a href="#"><i class="fas fa-graduation-cap"></i> <span> Students</span> <span
-                            class="menu-arrow"></span></a>
-                    <ul>
+              </li>
+              <li class="submen">
+                <a href="/student/attendance"
+                  ><i class="fas fa-graduation-cap"></i>
+                  <span> Attendance</span> <span class="menu-arrow"></span
+                ></a>
+                <!-- <ul>
                         <li><a href="students.html">Student List</a></li>
                         <li><a href="student-details.html">Student View</a></li>
                         <li><a href="add-student.html" >Student Add</a></li>
                         <li><a href="edit-student.html">Student Edit</a></li>
-                    </ul>
-                </li>
-                <li class="submenu">
-                    <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Teachers</span> <span
-                            class="menu-arrow"></span></a>
-                    <ul>
+                    </ul> -->
+              </li>
+              <li class="submen">
+                <a href="/student/teacher"
+                  ><i class="fas fa-chalkboard-teacher"></i>
+                  <span> Teachers</span> <span class="menu-arrow"></span
+                ></a>
+                <!-- <ul>
                         <li><a href="teachers.html">Teacher List</a></li>
                         <li><a href="teacher-details.html">Teacher View</a></li>
                         <li><a href="add-teacher.html">Teacher Add</a></li>
                         <li><a href="edit-teacher.html">Teacher Edit</a></li>
-                    </ul>
-                </li>
-                <li class="submenu">
+                    </ul> -->
+              </li>
+              <!-- <li class="submen">
                     <a href="#"><i class="fas fa-building"></i> <span> Departments</span> <span
                             class="menu-arrow"></span></a>
-                    <ul>
-                        <li><a href="departments.html">Department List</a></li>
-                        <li><a href="add-department.html">Department Add</a></li>
-                        <li><a href="edit-department.html">Department Edit</a></li>
-                    </ul>
-                </li>
-                <li class="submenu">
-                    <a href="#"><i class="fas fa-book-reader"></i> <span> Subjects</span> <span
-                            class="menu-arrow"></span></a>
-                    <ul>
-                        <li><a href="subjects.html">Subject List</a></li>
-                        <li><a href="add-subject.html">Subject Add</a></li>
-                        <li><a href="edit-subject.html">Subject Edit</a></li>
-                    </ul>
-                </li>
-                <li>
+                </li> -->
+              <li class="submen">
+                <a href="/student/subject"
+                  ><i class="fas fa-book-reader"></i> <span> Subjects</span>
+                  <span class="menu-arrow"></span
+                ></a>
+              </li>
+              <!-- <li>
                     <a href="holiday.html"><i class="fas fa-holly-berry"></i> <span>Holiday</span></a>
-                </li>
-                <li>
-                    <a href="event.html"><i class="fas fa-calendar-day"></i> <span>Events</span></a>
-                </li>
-                <li>
-                    <a href="transport.html"><i class="fas fa-bus"></i> <span>Vehicle</span></a>
-                </li>
-                    </ul>
-                </li>
+                </li> -->
+              <li>
+                <a href="/student/event"
+                  ><i class="fas fa-calendar-day"></i> <span>Events</span></a
+                >
+              </li>
+              <li>
+                <a href="/student/vehicle"
+                  ><i class="fas fa-bus"></i> <span>Vehicle</span></a
+                >
+              </li>
+              <li>
+                <a href="/student/complaints"
+                  ><i class="fas fa-book"></i> <span>Have Complaints?</span></a
+                >
+              </li>
+              <li>
+                <a href="/student/community"
+                  ><i class="fas fa-users"></i> <span>Community</span></a
+                >
+              </li>
             </ul>
-        </div>
+          </div>
         </div>
       </div>
 
@@ -200,7 +294,7 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="page-sub-header">
-                  <h3 class="page-title">Welcome</h3>
+                  <h3 class="page-title">Welcome Student</h3>
                   <ul class="breadcrumb">
                     <li class="breadcrumb-item">
                       <a href="/student">Home</a>
@@ -220,14 +314,8 @@
                     class="db-widgets d-flex justify-content-between align-items-center"
                   >
                     <div class="db-info">
-                      <h6>All Courses</h6>
-                      <h3>04/06</h3>
-                    </div>
-                    <div class="db-icon">
-                      <img
-                        src="assets/img/icons/teacher-icon-01.svg"
-                        alt="Dashboard Icon"
-                      />
+                      <h6>Attendance Percentage</h6>
+                      <h3><%= attendancePercentage%>%</h3>
                     </div>
                   </div>
                 </div>
@@ -240,20 +328,14 @@
                     class="db-widgets d-flex justify-content-between align-items-center"
                   >
                     <div class="db-info">
-                      <h6>All Projects</h6>
-                      <h3>40/60</h3>
-                    </div>
-                    <div class="db-icon">
-                      <img
-                        src="assets/img/icons/teacher-icon-02.svg"
-                        alt="Dashboard Icon"
-                      />
+                      <h6>Total Events</h6>
+                      <h3><%= events.length || 0%></h3>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-xl-3 col-sm-6 col-12 d-flex">
+            <!-- <div class="col-xl-3 col-sm-6 col-12 d-flex">
               <div class="card bg-comman w-100">
                 <div class="card-body">
                   <div
@@ -262,12 +344,6 @@
                     <div class="db-info">
                       <h6>Test Attended</h6>
                       <h3>30/50</h3>
-                    </div>
-                    <div class="db-icon">
-                      <img
-                        src="assets/img/icons/student-icon-01.svg"
-                        alt="Dashboard Icon"
-                      />
                     </div>
                   </div>
                 </div>
@@ -283,21 +359,15 @@
                       <h6>Test Passed</h6>
                       <h3>15/20</h3>
                     </div>
-                    <div class="db-icon">
-                      <img
-                        src="assets/img/icons/student-icon-02.svg"
-                        alt="Dashboard Icon"
-                      />
-                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
 
           <div class="row">
             <div class="col-12 col-lg-12 col-xl-8">
-              <div class="card flex-fill comman-shadow">
+              <!-- <div class="card flex-fill comman-shadow">
                 <div class="card-header">
                   <div class="row align-items-center">
                     <div class="col-6">
@@ -425,7 +495,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <div class="row">
                 <div class="col-12 col-lg-12 col-xl-12 d-flex">
                   <div class="card flex-fill comman-shadow">
@@ -452,95 +522,90 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-12 col-lg-12 col-xl-12 d-flex">
-                  <div class="card flex-fill comman-shadow">
-                    <div class="card-header d-flex align-items-center">
-                      <h5 class="card-title">Teaching History</h5>
-                      <ul class="chart-list-out student-ellips">
-                        <li class="star-menus">
-                          <a href="javascript:;"
-                            ><i class="fas fa-ellipsis-v"></i
-                          ></a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="card-body">
-                      <div class="teaching-card">
-                        <ul class="steps-history">
-                          <li>Sep22</li>
-                          <li>Sep23</li>
-                          <li>Sep24</li>
-                        </ul>
-                        <ul class="activity-feed">
-                          <li class="feed-item d-flex align-items-center">
-                            <div class="dolor-activity">
-                              <span class="feed-text1"><a>Mathematics</a></span>
-                              <ul class="teacher-date-list">
-                                <li>
-                                  <i class="fas fa-calendar-alt me-2"></i
-                                  >September 5, 2022
-                                </li>
-                                <li>|</li>
-                                <li>
-                                  <i class="fas fa-clock me-2"></i>09:00 am -
-                                  10:00 am (60 Minutes)
-                                </li>
-                              </ul>
-                            </div>
-                            <div class="activity-btns ms-auto">
-                              <button type="submit" class="btn btn-info">
-                                In Progress
-                              </button>
-                            </div>
-                          </li>
-                          <li class="feed-item d-flex align-items-center">
-                            <div class="dolor-activity">
-                              <span class="feed-text1"><a>Geography </a></span>
-                              <ul class="teacher-date-list">
-                                <li>
-                                  <i class="fas fa-calendar-alt me-2"></i
-                                  >September 5, 2022
-                                </li>
-                                <li>|</li>
-                                <li>
-                                  <i class="fas fa-clock me-2"></i>09:00 am -
-                                  10:00 am (60 Minutes)
-                                </li>
-                              </ul>
-                            </div>
-                            <div class="activity-btns complete ms-auto">
-                              <button type="submit" class="btn btn-info">
-                                Completed
-                              </button>
-                            </div>
-                          </li>
-                          <li class="feed-item d-flex align-items-center">
-                            <div class="dolor-activity">
-                              <span class="feed-text1"><a>Botony</a></span>
-                              <ul class="teacher-date-list">
-                                <li>
-                                  <i class="fas fa-calendar-alt me-2"></i
-                                  >September 5, 2022
-                                </li>
-                                <li>|</li>
-                                <li>
-                                  <i class="fas fa-clock me-2"></i>09:00 am -
-                                  10:00 am (60 Minutes)
-                                </li>
-                              </ul>
-                            </div>
-                            <div class="activity-btns ms-auto">
-                              <button type="submit" class="btn btn-info">
-                                In Progress
-                              </button>
-                            </div>
-                          </li>
-                        </ul>
+                <!-- <div class="col-12 col-lg-12 col-xl-12 d-flex"> -->
+                  <h2>Attendance</h2>
+
+                  <div class="table-responsive">
+                    <table class="table border-0 star-student table-hover table-center mb-0 table-striped">
+                      <thead class="student-thread">
+                        <tr>
+                          <th>ID</th>
+                          <th>Username</th>
+                          <th>Date</th>
+                          <th>Attendance</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% studentAttendance.forEach(function(s) { %>
+                            <tr>
+                              <td><%= s.id || 'N/A' %></td>
+                              <td>
+                                <h2 class="table-avatar">
+                                  <a href="#"><%= s.user?.username %></a>
+                                </h2>
+                              </td>
+                              <td><%= new Date(s.date).toLocaleDateString('en-GB') || 'N/A' %></td>
+                              <td>
+                                <% if(s.status === 'present') { %>
+                                  <span class="badge bg-success">Present</span>
+                                <% } else if(s.status === 'absent') { %>
+                                  <span class="badge bg-danger">Absent</span>
+                                <% } else { %>
+                                  <span class="badge bg-warning">Not Marked</span>
+                                <% } %>
+                              </td>
+                              <td class="text-end">
+                               
+                              </td>
+                            </tr>
+                          <% }); %>
+                      </tbody>
+                    </table>
+                  </div> 
+                <!-- </div> -->
+              </div>
+            </div>
+            <div class="chat-window-wrapper">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title mb-0">
+                    <i class="fas fa-robot me-2"></i>Campus-Connect Assistant
+                    <button id="minimize-chat" class="btn btn-sm float-end">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </h5>
+                </div>
+                <div class="card-body chat-body">
+                  <div class="chat-messages" id="chat-messages">
+                    <div class="message bot-message">
+                      <div class="message-content">
+                        <div class="message-text">Hello, <%= student.username %>! I'm your Campus-Connect assistant. How can I help you today?</div>
+                        <div class="message-time">Just now</div>
                       </div>
                     </div>
                   </div>
+                  
+                  <div class="chat-input-container">
+                    <div class="typing-indicator" id="typing-indicator" style="display: none;">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                    <form id="chat-form" class="chat-form">
+                      <div class="input-group">
+                        <input type="text" id="chat-input" class="form-control" placeholder="Type your message..." autocomplete="off">
+                        <button class="btn btn-primary" type="submit">
+                          <i class="fas fa-paper-plane"></i>
+                        </button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
               </div>
+              
+              <button id="chat-toggle" class="chat-toggle">
+                <i class="fas fa-comments"></i>
+              </button>
             </div>
             <div class="col-12 col-lg-12 col-xl-4 d-flex">
               <div class="card flex-fill comman-shadow">
@@ -553,94 +618,20 @@
                         ><a href="javascript:;"><i class="feather-plus"></i></a
                       ></span>
                     </div>
-                    <div class="upcome-event-date">
-                      <h3>10 Jan</h3>
-                      <span><i class="fas fa-ellipsis-h"></i></span>
-                    </div>
-                    <div class="calendar-details">
-                      <p>08:00 am</p>
-                      <div class="calendar-box normal-bg">
-                        <div class="calandar-event-name">
-                          <h4>Botony</h4>
-                          <h5>Lorem ipsum sit amet</h5>
+                    <% events.forEach(function(event) { %>
+                      <div class="calendar-details">
+                        <p><%= new Date(event.startDatetime).toLocaleDateString('en-GB') %></p>
+                        <div class="calendar-box normal-bg">
+                          <div class="calandar-event-name">
+                            <h4><%= event.title %></h4>
+                            <h5><%= event.description %></h5>
+                          </div>
+                          <span><%= event.location %></span>
                         </div>
-                        <span>08:00 - 09:00 am</span>
                       </div>
-                    </div>
-                    <div class="calendar-details">
-                      <p>09:00 am</p>
-                      <div class="calendar-box normal-bg">
-                        <div class="calandar-event-name">
-                          <h4>Botony</h4>
-                          <h5>Lorem ipsum sit amet</h5>
-                        </div>
-                        <span>09:00 - 10:00 am</span>
-                      </div>
-                    </div>
-                    <div class="calendar-details">
-                      <p>10:00 am</p>
-                      <div class="calendar-box normal-bg">
-                        <div class="calandar-event-name">
-                          <h4>Botony</h4>
-                          <h5>Lorem ipsum sit amet</h5>
-                        </div>
-                        <span>10:00 - 11:00 am</span>
-                      </div>
-                    </div>
-                    <div class="upcome-event-date">
-                      <h3>10 Jan</h3>
-                      <span><i class="fas fa-ellipsis-h"></i></span>
-                    </div>
-                    <div class="calendar-details">
-                      <p>08:00 am</p>
-                      <div class="calendar-box normal-bg">
-                        <div class="calandar-event-name">
-                          <h4>English</h4>
-                          <h5>Lorem ipsum sit amet</h5>
-                        </div>
-                        <span>08:00 - 09:00 am</span>
-                      </div>
-                    </div>
-                    <div class="calendar-details">
-                      <p>09:00 am</p>
-                      <div class="calendar-box normal-bg">
-                        <div class="calandar-event-name">
-                          <h4>Mathematics</h4>
-                          <h5>Lorem ipsum sit amet</h5>
-                        </div>
-                        <span>09:00 - 10:00 am</span>
-                      </div>
-                    </div>
-                    <div class="calendar-details">
-                      <p>10:00 am</p>
-                      <div class="calendar-box normal-bg">
-                        <div class="calandar-event-name">
-                          <h4>History</h4>
-                          <h5>Lorem ipsum sit amet</h5>
-                        </div>
-                        <span>10:00 - 11:00 am</span>
-                      </div>
-                    </div>
-                    <div class="calendar-details">
-                      <p>11:00 am</p>
-                      <div class="calendar-box break-bg">
-                        <div class="calandar-event-name">
-                          <h4>Break</h4>
-                          <h5>Lorem ipsum sit amet</h5>
-                        </div>
-                        <span>11:00 - 12:00 am</span>
-                      </div>
-                    </div>
-                    <div class="calendar-details">
-                      <p>11:30 am</p>
-                      <div class="calendar-box normal-bg">
-                        <div class="calandar-event-name">
-                          <h4>History</h4>
-                          <h5>Lorem ipsum sit amet</h5>
-                        </div>
-                        <span>11:30 - 12:00 am</span>
-                      </div>
-                    </div>
+                    <% }); %>
+                    
+                    
                   </div>
                 </div>
               </div>
@@ -652,22 +643,24 @@
       </div>
     </div>
 
-    <script src="assets/js/jquery-3.6.0.min.js"></script>
+    <script src="/assets/js/jquery-3.6.0.min.js"></script>
 
-    <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <script src="assets/js/feather.min.js"></script>
+    <script src="/assets/js/feather.min.js"></script>
 
-    <script src="assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
-    <script src="assets/plugins/apexchart/apexcharts.min.js"></script>
-    <script src="assets/plugins/apexchart/chart-data.js"></script>
+    <script src="/assets/plugins/apexchart/apexcharts.min.js"></script>
+    <script src="/assets/plugins/apexchart/chart-data.js"></script>
 
-    <script src="assets/plugins/simple-calendar/jquery.simple-calendar.js"></script>
-    <script src="assets/js/calander.js"></script>
+    <script src="/assets/plugins/simple-calendar/jquery.simple-calendar.js"></script>
+    <script src="/assets/js/calander.js"></script>
 
-    <script src="assets/js/circle-progress.min.js"></script>
+    <script src="/assets/js/circle-progress.min.js"></script>
 
-    <script src="assets/js/script.js"></script>
+    <script src="/assets/js/script.js"></script>
+    <script src="/assets/js/custom.js"></script>
+
   </body>
 </html>

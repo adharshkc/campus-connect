@@ -37,6 +37,7 @@ model User {
   reviewedSuggestions       Suggestion[]           @relation("SuggestionReviewer")
   suggestions               Suggestion[]           @relation("SuggestionCreator")
   systemLogs                SystemLog[]
+  Message                   Message[]
 
   @@map("users")
 }
@@ -74,6 +75,7 @@ model Department {
   headStaff        StaffProfile?          @relation("DepartmentHead", fields: [headOfDepartment], references: [id])
   staff            StaffProfile[]         @relation("DepartmentStaff")
   students         StudentProfile[]
+  Subject          Subject[]
 
   @@map("departments")
 }
@@ -111,6 +113,7 @@ model StaffProfile {
   headOfDepartments     Department[] @relation("DepartmentHead")
   department            Department?  @relation("DepartmentStaff", fields: [departmentId], references: [id])
   user                  User         @relation(fields: [userId], references: [id])
+  Subject               Subject[]
 
   @@map("staff_profile")
 }
@@ -127,21 +130,38 @@ model AdminProfile {
   @@map("admin_profile")
 }
 
+model Subject {
+  id             Int      @id @default(autoincrement())
+  name           String
+  code           String   @unique
+  departmentId   Int      @map("department_id")
+  semester       Int
+  isElective     Boolean  @default(false) @map("is_elective")
+  staffProfileId Int?     @map("staff_profile_id") // NEW: optional link to teacher
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  department Department    @relation(fields: [departmentId], references: [id])
+  teacher    StaffProfile? @relation(fields: [staffProfileId], references: [id])
+  attendance Attendance[]
+
+  @@map("subjects")
+}
+
 model Event {
-  id              Int                 @id @default(autoincrement()) @map("event_id")
-  title           String
-  description     String?
-  type            String?
-  startDatetime   DateTime            @map("start_datetime")
-  endDatetime     DateTime            @map("end_datetime")
-  location        String?
+  id            Int                 @id @default(autoincrement()) @map("event_id")
+  title         String
+  description   String?
+  type          String?
+  startDatetime DateTime            @map("start_datetime")
+  endDatetime   DateTime            @map("end_datetime")
+  location      String?
   // maxParticipants Int?                @map("max_participants")
   // createdBy       Int                 @map("created_by")
-  isPublished     Boolean             @default(true) @map("is_published")
-  createdAt       DateTime            @default(now()) @map("created_at")
-  updatedAt       DateTime            @default(now()) @map("updated_at")
+  isPublished   Boolean             @default(true) @map("is_published")
+  createdAt     DateTime            @default(now()) @map("created_at")
+  updatedAt     DateTime            @default(now()) @map("updated_at")
   // feedback        EventFeedback[]
-  registrations   EventRegistration[]
+  registrations EventRegistration[]
   // creator         User                @relation("EventCreator", fields: [createdBy], references: [id])
 
   @@map("events")
@@ -178,7 +198,7 @@ model EventRegistration {
 model Complaint {
   id              Int             @id @default(autoincrement()) @map("complaint_id")
   userId          Int             @map("user_id")
-  category        Int             @map("category_id")
+  category        String          @map("category_id")
   title           String
   description     String
   location        String?
@@ -239,6 +259,8 @@ model Attendance {
   remarks      String?
   recorder     User           @relation("AttendanceRecorder", fields: [recordedBy], references: [id])
   user         User           @relation("AttendanceUser", fields: [userId], references: [id])
+  Subject      Subject?       @relation(fields: [subjectId], references: [id])
+  subjectId    Int?
 
   @@unique([userId, date])
   @@map("attendance")
@@ -338,6 +360,14 @@ model SystemLog {
   user       User?    @relation(fields: [userId], references: [id])
 
   @@map("system_logs")
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
 }
 
 enum UserType {

@@ -36,4 +36,17 @@ module.exports = {
   async delEvent(id) {
     await prisma.event.delete({ where: { id } });
   },
+  async latestEvents(){
+     return await prisma.event.findFirst({
+      where: {
+        isPublished: true,
+        startDatetime: {
+          gte: new Date(), 
+        },
+      },
+      orderBy: {
+        startDatetime: 'asc', 
+      },
+    });
+  }
 };

@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get("/login", viewController.getLogin)
 router.post("/login", login);
-router.get("/student", getStudentDashboard);
+// router.get("/student", getStudentDashboard);
 router.get("/logout", logout);
 
 module.exports = router;

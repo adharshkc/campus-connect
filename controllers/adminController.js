@@ -16,6 +16,7 @@ const {
   editStaff,
 } = require("../services/staff");
 const { getAllStudents } = require("../services/student");
+const { getAllSubjects, createSubject, delSubject } = require("../services/subject");
 const {
   getAllVehicles,
   createVehicle,
@@ -325,7 +326,7 @@ const getEditEvent = async (req, res) => {
   const { id } = req.params;
   const { userId, role } = req.session;
   const admin = getAdmin(userId);
-  const event = await getEventById(id);
+  const event = await getEventById(parseInt(id));
   res.render("edit-event", { admin, event });
 };
 
@@ -342,6 +343,43 @@ const deleteEvent = async(req, res)=>{
   await delEvent(parseInt(id))
   res.redirect('/admin/events')
 
+}
+
+const getAdminSubjects = async (req, res) => {
+  const { userId, role } = req.session;
+  const admin = await getAdmin(userId);
+  const subjects = await getAllSubjects();
+  console.log(subjects);
+  res.render("adminSubjectDashboard", { admin, subjects });
+};
+
+const getAddSubject = async (req, res) => {
+  const { userId, role } = req.session;
+  const admin = await getAdmin(userId);
+  const teachers = await getAllStaffs();
+  const departments = await getAllDepartments();
+  res.render("add-subject", { admin, teachers, departments });
+}
+
+const addSubject = async (req, res) => {
+  const { name, code, department, teacher, semester } = req.body;
+  console.log(req.body);
+  const subject = {
+    name,
+    code,
+    departmentId: parseInt(department),
+    staffProfileId: parseInt(teacher),
+    semester: parseInt(semester),
+  };
+  console.log(subject);
+  await createSubject(subject);
+  res.redirect("/admin/subjects");
+}
+
+const deleteSubject = async (req, res) => {
+  const { id } = req.params;
+  await delSubject(parseInt(id));
+  res.redirect("/admin/subjects");
 }
 
 module.exports = {
@@ -371,5 +409,9 @@ module.exports = {
   getAddEvent,
   getEditEvent,
   addEvent,
-  deleteEvent
+  deleteEvent,
+  getAdminSubjects,
+  getAddSubject,
+  addSubject,
+  deleteSubject
 };
