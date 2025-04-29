@@ -12,6 +12,7 @@ const {
   getDepartment,
   getVehicle,
   getEvent,
+  addLate,
 } = require("../controllers/staffController");
 
 const router = express.Router();
@@ -27,6 +28,7 @@ router.post("/staff/attendance/absent", isStaff, addAbsentAttendance);
 router.get("/staff/departmentDashboard", isStaff, getDepartment);
 router.get("/staff/vehicleDashboard", isStaff, getVehicle);
 router.get("/staff/eventDashboard", isStaff, getEvent);
+router.post("/staff/attendance/late", isStaff, addLate);
 
 
 module.exports = router;

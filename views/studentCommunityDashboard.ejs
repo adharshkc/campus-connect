@@ -204,10 +204,10 @@
                             <div class="message message-incoming">
                               <div class="d-flex">
                                 <div class="chat-avatar d-flex align-items-center justify-content-center">
-                                    <%= msg.user.username.toUpperCase() %>
+                                    <%= msg.user.username %>
                                   </div>
                                 <div class="flex-grow-1 ms-2">
-                                  <div class="message-content"><%= msg.content %></div>
+                                  <div class="message-"><%= msg.content %></div>
                                   <div class="message-meta"><%= msg.user.name %> • <%= new Date(msg.createdAt).toLocaleTimeString() %></div>
                                 </div>
                               </div>

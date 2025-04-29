@@ -261,6 +261,7 @@ model Attendance {
   user         User           @relation("AttendanceUser", fields: [userId], references: [id])
   Subject      Subject?       @relation(fields: [subjectId], references: [id])
   subjectId    Int?
+  isLate       Boolean        @default(false) @map("is_late")
 
   @@unique([userId, date])
   @@map("attendance")

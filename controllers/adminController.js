@@ -1,3 +1,4 @@
+const prisma = require("../prisma/client");
 const { getAdmin } = require("../services/admin");
 const {
   getAllDepartments,
@@ -24,7 +25,7 @@ const {
   editVeh,
   delVehicle,
 } = require("../services/vehicles");
-
+const nodemailer = require("nodemailer");
 const getAdminDashboard = async (req, res, next) => {
   try {
     // console.log("akd");
@@ -330,11 +331,32 @@ const getEditEvent = async (req, res) => {
   res.render("edit-event", { admin, event });
 };
 
+const transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',  // SMTP server address
+  port: 587,                 // Port for SMTP (usually 587 for TLS or 465 for SSL)
+  secure: false,             // true for 465, false for other ports
+  auth: {
+    user: 'Campusconnectsoftware@gmail.com',
+    pass: 'nhdn mpwa fqpn ckvq'
+  }
+});
+
 const addEvent = async (req, res) => {
   const { title, description, startDate, endDate, location, type } = req.body;
   const event = { title, description, startDate, endDate, location, type };
+  const users = await prisma.user.findMany()
   console.log(event)
-  await createEvent(event)
+  const addedEvent = await createEvent(event)
+  const mailOptions = {
+    subject: `New Event: ${event.title}`,
+    text: `You're invited to ${event.title}!\n\nDescription: ${event.description}\nLocation: ${event.location}\nStarts: ${event.startDate}\nEnds: ${event.endDate}`
+  };
+  for (const user of users) {
+    await transporter.sendMail({
+      ...mailOptions,
+      to: user.email,
+    });
+  }
   res.redirect('/admin/events')
 };
 

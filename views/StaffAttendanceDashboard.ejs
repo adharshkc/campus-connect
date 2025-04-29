@@ -167,15 +167,11 @@
                             <li><a href="edit-department.html">Department Edit</a></li>
                         </ul> -->
                     </li>
-                    <li class="submen">
+                    <!-- <li class="submen">
                         <a href="#"><i class="fas fa-book-reader"></i> <span> Reportings</span> <span
                                 class="menu-arrow"></span></a>
-                        <!-- <ul>
-                            <li><a href="subjects.html">Subject List</a></li>
-                            <li><a href="add-subject.html">Subject Add</a></li>
-                            <li><a href="edit-subject.html">Subject Edit</a></li>
-                        </ul> -->
-                    </li>
+                        
+                    </li> -->
                     <li>
                         <a href="/staff/vehicleDashboard"><i class="fas fa-holly-berry"></i> <span>Vehicles</span></a>
                     </li>
@@ -198,7 +194,7 @@
                   <h3 class="page-title">Attendance</h3>
                   <ul class="breadcrumb">
                     <li class="breadcrumb-item">
-                      <a href="#">Student</a>
+                      <a href="#">Attendance</a>
                     </li>
                     <li class="breadcrumb-item active">All Students</li>
                   </ul>
@@ -250,7 +246,7 @@
                   <div class="page-header">
                     <div class="row align-items-center">
                       <div class="col">
-                        <h3 class="page-title">Students</h3>
+                        <h3 class="page-title">Attendance</h3>
                       </div>
                       <div
                         class="col-auto text-end float-end ms-auto download-grp"
@@ -276,6 +272,7 @@
                           <th>Email</th>
                           <th>Mobile Number</th>
                           <th class="text-end">Attendance</th>
+                          <th class="text-end">Is Late</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -311,6 +308,27 @@
                                   <i class="feather-x"></i>
                                 </button>
                               </form>
+                              
+                            </div>
+                          </td>
+                          <td class="text-end">
+                            <div class="actions">
+                              <form action="/staff/attendance/late" method="POST" style="display:inline;">
+                                <input type="hidden" name="studentId" value="<%= student.userId %>" />
+                                <input type="hidden" name="date" value="<%= new Date().toISOString().split('T')[0] %>" />
+                                
+                                <button type="submit" class="btn btn-sm bg-success-light me-2" title="Mark Present">
+                                  <i class="feather-check"></i>
+                                </button>
+                              </form>
+                              <!-- <form action="/staff/attendance/absent" method="POST" style="display:inline;">
+                                <input type="hidden" name="studentId" value="<%= student.userId %>" />
+                                <input type="hidden" name="date" value="<%= new Date().toISOString().split('T')[0] %>" />
+                                
+                                <button type="submit" class="btn btn-sm bg-danger-light me-2" title="Mark Absent">
+                                  <i class="feather-x"></i>
+                                </button>
+                              </form> -->
                               
                             </div>
                           </td>

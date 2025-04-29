@@ -5,7 +5,16 @@ const { getAllEvents } = require("../services/event");
 const { getStaffById, getStaffByUserId } = require("../services/staff");
 const { getAllStudents, createStudent, studentDelete } = require("../services/student");
 const { getAllVehicles } = require("../services/vehicles");
-
+const nodemailer = require("nodemailer");
+const transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',  // SMTP server address
+  port: 587,                 // Port for SMTP (usually 587 for TLS or 465 for SSL)
+  secure: false,             // true for 465, false for other ports
+  auth: {
+    user: 'Campusconnectsoftware@gmail.com',
+    pass: 'nhdn mpwa fqpn ckvq'
+  }
+});
 module.exports = {
   async getDashboard(req, res) {
     const { userId, role } = req.session;
@@ -141,6 +150,59 @@ module.exports = {
         // subjectId: subjectId ? parseInt(subjectId) : null
       }
     });
+    res.redirect("/staff/attendance");
+  },
+
+  async addLate(req, res){
+    const {studentId, date} = req.body
+    const id = parseInt(studentId)
+    const { userId } = req.session;
+    const staff = await getStaffByUserId(userId);
+    const student = await getAdmin(id);
+    const attendanceDate = new Date(date);
+    const attendance = await prisma.attendance.upsert({
+      where: {
+        userId_date: {
+          userId: parseInt(studentId),
+          date: attendanceDate
+        }
+      },
+      update: {
+        isLate: true
+      },
+      create: {
+        userId: parseInt(studentId),
+        date: attendanceDate,
+        isLate: true,
+        status:"present",
+        recordedBy: staff.userId, 
+        // remarks: remarks || null,
+        // subjectId: subjectId ? parseInt(subjectId) : null
+      }
+    });
+    try {
+      const mailOptions = {
+        from: '"Campus Connect" <Campusconnectsoftware@gmail.com>',
+        to: student.email,
+        subject: 'Notice of Late Attendance',
+        text: `Dear Student,\n\nWe hope this message finds you well. This is to inform you that you have been marked as late on ${attendanceDate.toDateString()}.\n\nIf you have any concerns, please feel free to reach out to the administration.\n\nBest regards,\nCampus Connect Team`,
+        html: `
+          <p>Dear <strong>${student.name}</strong>,</p>
+          <p>We hope this message finds you well. This is to inform you that you have been marked as <strong>late</strong> on <strong>${attendanceDate.toDateString()}</strong>.</p>
+          <p>If you have any concerns, please feel free to reach out to the administration.</p>
+          <p>Best regards,</p>
+        `
+      };
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return console.error('Error:', error);
+        }
+        console.log('Email sent successfully!');
+        console.log('Message ID:', info.messageId);
+      });
+    } catch (error) {
+      console.log("Error sending email:", error);
+    }
     res.redirect("/staff/attendance");
   },
 

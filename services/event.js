@@ -21,7 +21,7 @@ module.exports = {
       const [day, month, year] = dateStr.split("-");
       return new Date(`${year}-${month}-${day}`);
     }
-    await prisma.event.create({
+   return await prisma.event.create({
       data: {
         title,
         description,
