@@ -7,10 +7,14 @@ const authService = require("../services/auth");
 const login = async (req, res, next) => {
   try {
     const { username, password } = req.body;
-    console.log(username, password)
-    const user = await await prisma.user.findUnique({ where: { username } });
+    const user =  await prisma.user.findUnique({ where: { username } });
+    
     if(!user) {
       return res.render('login', { error: 'Invalid username or password' });
+    }
+    console.log(username, password, user)
+    if(user.passwordHash !== password) {
+      return res.render('login', { error: 'Invalid password' });
     }
     req.session.userId = user.id;
     req.session.role = user.userType;
