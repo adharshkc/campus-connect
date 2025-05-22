@@ -1,4 +1,5 @@
 const prisma = require("../prisma/client");
+const { getAdmin } = require("../services/admin");
 const authService = require("../services/auth");
 
 
@@ -54,4 +55,59 @@ function logout(req, res){
       });
 }
 
-module.exports = {login, getLogin, getStudentDashboard, logout}
+async function getProfile(req, res){
+
+      const { userId, role } = req.session;
+      console.log(userId, role)
+      try {
+    let profile;
+
+    switch (role) {
+      case 'admin':
+        profile = await prisma.adminProfile.findUnique({
+          where: { userId },
+          include: { user: true }
+        });
+        break;
+
+      case 'student':
+        profile = await prisma.studentProfile.findUnique({
+          where: { userId },
+          include: { user: true, department: true }
+        });
+        break;
+
+      case 'staff':
+        profile = await prisma.staffProfile.findUnique({
+          where: { userId },
+          include: { user: true, department: true }
+        });
+        break;
+
+      default:
+        return res.status(400).send("Invalid user role");
+      }
+      console.log(profile)
+      const admin = await getAdmin(userId);
+      res.render('profile', {admin, profile});
+  } catch (error) {  
+    console.error("Error fetching profile:", error);
+  }
+}
+
+// const forgotPassword = async (req, res) => {
+//   const { email } = req.body;
+//   try {
+//     const user = await authService.forgotPassword(email);
+//     if (!user) {
+//       return res.status(404).json({ message: "User not found" });
+//     }
+//     // Send email with reset link
+//     res.status(200).json({ message: "Reset link sent to your email" });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+// };
+
+module.exports = {login, getLogin, getStudentDashboard, logout, getProfile}

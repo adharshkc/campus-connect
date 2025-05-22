@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=0"
+    />
+    <title>CampusConnect - Students</title>
+
+    <link rel="shortcut icon" href="/assets/img/favicon.png" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="/assets/plugins/bootstrap/css/bootstrap.min.css"
+    />
+
+    <link rel="stylesheet" href="/assets/plugins/feather/feather.css" />
+
+    <link rel="stylesheet" href="/assets/plugins/icons/flags/flags.css" />
+
+    <link
+      rel="stylesheet"
+      href="/assets/plugins/fontawesome/css/fontawesome.min.css"
+    />
+    <link rel="stylesheet" href="/assets/plugins/fontawesome/css/all.min.css" />
+
+    <link
+      rel="stylesheet"
+      href="/assets/plugins/datatables/datatables.min.css"
+    />
+
+    <link rel="stylesheet" href="/assets/css/style.css" />
+  </head>
+  <body>
+    <div class="main-wrapper">
+      <div class="header">
+        <div class="header-left">
+          <a href="/admin/dashboard" class="logo">
+            <img src="/assets/img/logo.png" alt="Logo" />
+          </a>
+          <a href="/admin/dashboard" class="logo logo-small">
+            <img
+              src="/assets/img/logo-small.png"
+              alt="Logo"
+              width="30"
+              height="30"
+            />
+          </a>
+        </div>
+        <div class="menu-toggle">
+          <a href="javascript:void(0);" id="toggle_btn">
+            <i class="fas fa-bars"></i>
+          </a>
+        </div>
+
+        <div class="top-nav-search">
+          <form>
+            <input type="text" class="form-control" placeholder="Search here" />
+            <button class="btn" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+        </div>
+        <a class="mobile_btn" id="mobile_btn">
+          <i class="fas fa-bars"></i>
+        </a>
+
+        <ul class="nav user-menu">
+          <li class="nav-item dropdown noti-dropdown language-drop me-2">
+            <a
+              href="#"
+              class="dropdown-toggle nav-link header-nav-list"
+              data-bs-toggle="dropdown"
+            >
+              <img src="assets/img/icons/header-icon-01.svg" alt="" />
+            </a>
+            <div class="dropdown-menu">
+              <div class="noti-content">
+                <div>
+                  <a class="dropdown-item" href="javascript:;"
+                    ><i class="flag flag-lr me-2"></i>English</a
+                  >
+                  <a class="dropdown-item" href="javascript:;"
+                    ><i class="flag flag-bl me-2"></i>Francais</a
+                  >
+                  <a class="dropdown-item" href="javascript:;"
+                    ><i class="flag flag-cn me-2"></i>Turkce</a
+                  >
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <li class="nav-item zoom-screen me-2">
+            <a href="#" class="nav-link header-nav-list win-maximize">
+              <img src="assets/img/icons/header-icon-04.svg" alt="" />
+            </a>
+          </li>
+
+          <li class="nav-item dropdown has-arrow new-user-menus">
+            <a
+              href="#"
+              class="dropdown-toggle nav-link"
+              data-bs-toggle="dropdown"
+            >
+              <span class="user-img">
+                <img
+                  class="rounded-circle"
+                  src="/assets/img/profiles/avatar-01.jpg"
+                  width="31"
+                  alt="Soeng Souy"
+                />
+                <div class="user-text">
+                  <h6><%= admin.username %></h6>
+                  <p class="text-muted mb-0">Administrator</p>
+                </div>
+              </span>
+            </a>
+            <div class="dropdown-menu">
+              <div class="user-header">
+                <div class="avatar avatar-sm">
+                  <img
+                    src="/assets/img/profiles/avatar-01.jpg"
+                    alt="User Image"
+                    class="avatar-img rounded-circle"
+                  />
+                </div>
+                <div class="user-text">
+                  <h6><%= admin.username %></h6>
+                  <p class="text-muted mb-0">Administrator</p>
+                </div>
+              </div>
+              <a class="dropdown-item" href="/profile">My Profile</a>
+              <!-- <a class="dropdown-item" href="inbox.html">Inbox</a> -->
+              <a class="dropdown-item" href="/login">Logout</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="page-wrapper">
+        <div class="content container-fluid">
+          <div class="page-header">
+            <div class="row">
+              <div class="col">
+                <h3 class="page-title">Profile</h3>
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="#">Dashboard</a>
+                  </li>
+                  <li class="breadcrumb-item active">Profile</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="profile-header">
+                <div class="row align-items-center">
+                  <div class="col-auto profile-image">
+                    <a href="#">
+                      <img
+                        class="rounded-circle"
+                        alt="User Image"
+                        src="assets/img/profiles/avatar-02.jpg"
+                      />
+                    </a>
+                  </div>
+                  <div class="col ms-md-n2 profile-user-info">
+                    <h4 class="user-name mb-0"><%= profile.fullName %></h4>
+                    <h6 class="text-muted"><%= profile.userType %></h6>
+                    <div class="user-Location">
+                      <i class="fas fa-map-marker-alt"></i> India
+                    </div>
+                    <!-- <div class="about-text">Lorem ipsum dolor sit amet.</div> -->
+                  </div>
+                  <div class="col-auto profile-btn">
+                    <!-- <a href="" class="btn btn-primary"> Edit </a> -->
+                  </div>
+                </div>
+              </div>
+              <div class="profile-menu">
+                <ul class="nav nav-tabs nav-tabs-solid">
+                  <li class="nav-item">
+                    <a
+                      class="nav-link active"
+                      data-bs-toggle="tab"
+                      href="#per_details_tab"
+                      >About</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div class="tab-content profile-tab-cont">
+                <div class="tab-pane fade show active" id="per_details_tab">
+                  <div class="row">
+                    <div class="col-lg-9">
+                      <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title d-flex justify-content-between">
+                            <span>Personal Details</span>
+                            <!-- <a
+                              class="edit-link"
+                              data-bs-toggle="modal"
+                              href="#edit_personal_details"
+                              ><i class="far fa-edit me-1"></i>Edit</a
+                            > -->
+                          </h5>
+                          <div class="row">
+                            <p
+                              class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3"
+                            >
+                              ID
+                            </p>
+                            <p class="col-sm-9"><%= profile.contactNumber %></p>
+                          </div>
+                          <div class="row">
+                            <p
+                              class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3"
+                            >
+                              Name
+                            </p>
+                            <p class="col-sm-9"><%= profile.fullName %></p>
+                          </div>
+                          <div class="row">
+                            <!-- <p
+                              class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3"
+                            >
+                              Date of Birth
+                            </p>
+                            <p class="col-sm-9">24 Jul 1983</p> -->
+                          </div>
+                          <div class="row">
+                            <p
+                              class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3"
+                            >
+                              Email ID
+                            </p>
+                            <p class="col-sm-9">
+                              <a
+                                href="/cdn-cgi/l/email-protection"
+                                class="__cf_email__"
+                                data-cfemail="a1cbcec9cfc5cec4e1c4d9c0ccd1cdc48fc2cecc"
+                                ><%= profile.user.email %></a
+                              >
+                            </p>
+                          </div>
+                          <div class="row">
+                            <p
+                              class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3"
+                            >
+                              Mobile
+                            </p>
+                            <p class="col-sm-9"><%= profile.contactNumber %></p>
+                          </div>
+                          <div class="row">
+                            <p
+                              class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3"
+                            >
+                              Mobile
+                            </p>
+                            <p class="col-sm-9"><%= profile.contactNumber %></p>
+                          </div>
+                          
+                          <!-- <div class="row">
+                            <p class="col-sm-3 text-muted text-sm-end mb-0">
+                              Address
+                            </p>
+                            <p class="col-sm-9 mb-0">
+                              4663 Agriculture Lane,<br />
+                              Miami,<br />
+                              Florida - 33165,<br />
+                              United States.
+                            </p>
+                          </div> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <div id="password_tab" class="tab-pane fade"> -->
+                <form id="change-password-form">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Change Password</h5>
+                      <div class="row">
+                        <div class="col-md-10 col-lg-6">
+                          <form>
+                            <div class="form-group">
+                              <label>Old Password</label>
+                              <input type="password" id="old-password" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                              <label>New Password</label>
+                              <input type="password" class="form-control" id="new-password" />
+                            </div>
+                            <div class="form-group">
+                              <label>Confirm Password</label>
+                              <input type="password" class="form-control" id="confirm-password" />
+                            </div>
+                            <button class="btn btn-primary" type="submit">
+                              Save Changes
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <script>
+      document
+        .getElementById("change-password-form")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const oldPassword = document
+            .getElementById("old-password")
+            .value.trim();
+          const newPassword = document
+            .getElementById("new-password")
+            .value.trim();
+          const confirmPassword = document
+            .getElementById("confirm-password")
+            .value.trim();
+          const errorMessage = document.getElementById("error-message");
+          const submitBtn = document.getElementById("submit-btn");
+
+          errorMessage.textContent = ""; // Clear any previous error
+
+          // Basic validations
+          if (!oldPassword || !newPassword || !confirmPassword) {
+            errorMessage.textContent = "All fields are required.";
+            return;
+          }
+
+          if (newPassword !== confirmPassword) {
+            errorMessage.textContent =
+              "New password and confirmation do not match.";
+            return;
+          }
+
+          if (newPassword.length < 6) {
+            errorMessage.textContent =
+              "Password must be at least 6 characters.";
+            return;
+          }
+
+          // Disable the button to prevent duplicate submissions
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Saving...";
+
+          try {
+            const response = await fetch("/api/change-password", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                oldPassword,
+                newPassword,
+              }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+              throw new Error(data.message || "Something went wrong.");
+            }
+
+            alert("Password changed successfully!");
+            // Optionally reset the form
+            document.getElementById("change-password-form").reset();
+          } catch (err) {
+            errorMessage.textContent = err.message;
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Save Changes";
+          }
+        });
+    </script> -->
+
+    <script src="/assets/js/jquery-3.6.0.min.js"></script>
+
+    <script src="/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/assets/js/feather.min.js"></script>
+
+    <script src="/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <script src="/assets/plugins/datatables/datatables.min.js"></script>
+
+    <script src="/assets/js/script.js"></script>
+  </body>
+</html>

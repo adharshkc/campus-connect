@@ -81,7 +81,9 @@ const getAddTeacher = async (req, res, next) => {
     const { userId, role } = req.session;
 
     const admin = await getAdmin(userId);
-    return res.render("add-teacher", { admin });
+    const departments = await getAllDepartments()
+
+    return res.render("add-teacher", { admin, departments });
   } catch (error) {
     console.log(error);
   }

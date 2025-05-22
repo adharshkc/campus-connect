@@ -285,10 +285,14 @@
                           <input type="text" name="designation" required class="form-control" placeholder="Enter Designation" />
                         </div>
                       </div>
-                      <div class="col-12 col-sm-4">
+                       <div class="col-12 col-sm-4">
                         <div class="form-group local-forms">
                           <label>Department <span class="login-danger">*</span></label>
-                          <input type="text" name="department" req class="form-control" placeholder="Enter Department" />
+                          <select name="department" class="form-control select">
+                            <% departments.forEach(department => { %>
+                              <option value="<%= department.id %>"><%= department.code %></option>
+                            <% }) %>
+                          </select>
                         </div>
                       </div>
                   
@@ -310,7 +314,7 @@
                       <div class="col-12 col-sm-4">
                         <div class="form-group local-forms">
                           <label>Password <span class="login-danger">*</span></label>
-                          <input type="password" name="password" class="form-control" placeholder="Enter Password" />
+                          <input type="text" name="password" class="form-control" disabled value="123456" placeholder="Enter Password" />
                         </div>
                       </div>
                   
@@ -329,6 +333,133 @@
         </div>
       </div>
     </div>
+    <script>
+      // Teacher Registration Form Validation
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.querySelector('form[action="/admin/teacher"]');
+  
+  if (form) {
+    form.addEventListener('submit', function(event) {
+      // Prevent form submission initially
+      event.preventDefault();
+      
+      // Reset previous validation errors
+      clearErrors();
+      
+      // Validate all fields
+      let isValid = validateForm();
+      
+      // If all validations pass, submit the form
+      if (isValid) {
+        form.submit();
+      }
+    });
+  }
+  
+  // Clear all error messages
+  function clearErrors() {
+    const errorElements = document.querySelectorAll('.error-message');
+    errorElements.forEach(element => element.remove());
+    
+    const invalidInputs = document.querySelectorAll('.is-invalid');
+    invalidInputs.forEach(input => input.classList.remove('is-invalid'));
+  }
+  
+  // Display error message for a specific field
+  function showError(inputElement, message) {
+    inputElement.classList.add('is-invalid');
+    
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message text-danger mt-1';
+    errorDiv.textContent = message;
+    
+    const parentElement = inputElement.parentElement;
+    parentElement.appendChild(errorDiv);
+  }
+  
+  // Validate all form fields
+  function validateForm() {
+    let isValid = true;
+    
+    // Basic Details validation
+    const name = document.querySelector('input[name="name"]');
+    if (!name.value.trim()) {
+      showError(name, 'Name is required');
+      isValid = false;
+    } else if (name.value.trim().length < 3) {
+      showError(name, 'Name must be at least 3 characters');
+      isValid = false;
+    } 
+    
+    // Phone validation
+    const phone = document.querySelector('input[name="phone"]');
+    if (!phone.value.trim()) {
+      showError(phone, 'Phone number is required');
+      isValid = false;
+    } else if (!/^\d{10,15}$/.test(phone.value.replace(/[\s-]/g, ''))) {
+      showError(phone, 'Please enter a valid phone number (10-15 digits)');
+      isValid = false;
+    }
+    
+    
+    // Subject validation
+    const subject = document.querySelector('input[name="subject"]');
+    if (!subject.value.trim()) {
+      showError(subject, 'Subject is required');
+      isValid = false;
+    }
+    
+    // Designation validation
+    const designation = document.querySelector('input[name="designation"]');
+    if (!designation.value.trim()) {
+      showError(designation, 'Designation is required');
+      isValid = false;
+    }
+    
+    // Login Details validation
+    const username = document.querySelector('input[name="username"]');
+    if (!username.value.trim()) {
+      showError(username, 'Username is required');
+      isValid = false;
+    } else if (username.value.trim().length < 5) {
+      showError(username, 'Username must be at least 5 characters');
+      isValid = false;
+    } else if (!/^[a-zA-Z0-9_]+$/.test(username.value.trim())) {
+      showError(username, 'Username should contain only letters, numbers and underscores');
+      isValid = false;
+    }
+    
+    // Email validation
+    const email = document.querySelector('input[name="email"]');
+    if (!email.value.trim()) {
+      showError(email, 'Email is required');
+      isValid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+      showError(email, 'Please enter a valid email address');
+      isValid = false;
+    }
+    
+    // Password validation
+  
+    
+    return isValid;
+  }
+  
+  // Add custom validation styling
+  const style = document.createElement('style');
+  style.textContent = `
+    .is-invalid {
+      border-color: #dc3545 !important;
+    }
+    .error-message {
+      font-size: 80%;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+  `;
+  document.head.appendChild(style);
+});
+    </script>
 
     <script src="/assets/js/jquery-3.6.0.min.js"></script>
 

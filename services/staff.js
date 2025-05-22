@@ -1,3 +1,4 @@
+const { parse } = require("dotenv");
 const prisma = require("../prisma/client");
 
 module.exports = {
@@ -33,20 +34,21 @@ module.exports = {
         userType: "staff",
       },
     });
-    let departmentRecord = null;
-    if (department) {
-      departmentRecord = await prisma.department.upsert({
-        where: {
-          code: department,
-        },
-        update: {},
-        create: {
-          name: department,
-          code:department
-        },
-      });
-    }
-    console.log(departmentRecord)
+    const dep = parseInt(department)
+    // let departmentRecord = null;
+    // if (department) {
+    //   departmentRecord = await prisma.department.upsert({
+    //     where: {
+    //       code: department,
+    //     },
+    //     update: {},
+    //     create: {
+    //       name: department,
+    //       code:department
+    //     },
+    //   });
+    // }
+    // console.log(departmentRecord)
     const parsedDate = joiningDate
   ? new Date(joiningDate.split('-').reverse().join('-')) 
   : null;
@@ -59,7 +61,7 @@ module.exports = {
         joiningDate: parsedDate,
         subjectSpecialization: subject,
         designation,
-        departmentId: department ? parseInt(department) : null, 
+        departmentId: dep,
       },
       include: {
         user: true,
