@@ -169,7 +169,7 @@
                       <img
                         class="rounded-circle"
                         alt="User Image"
-                        src="assets/img/profiles/avatar-02.jpg"
+                        src="https://img.freepik.com/free-vector/user-circles-set_78370-4704.jpg?semt=ais_hybrid&w=740"
                       />
                     </a>
                   </div>
@@ -219,7 +219,7 @@
                             >
                               ID
                             </p>
-                            <p class="col-sm-9"><%= profile.contactNumber %></p>
+                            <p class="col-sm-9"><%= profile?.contactNumber %></p>
                           </div>
                           <div class="row">
                             <p
@@ -227,7 +227,15 @@
                             >
                               Name
                             </p>
-                            <p class="col-sm-9"><%= profile.fullName %></p>
+                            <p class="col-sm-9"><%= profile?.fullName %></p>
+                          </div>
+                          <div class="row">
+                            <p
+                              class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3"
+                            >
+                              Username
+                            </p>
+                            <p class="col-sm-9"><%= profile?.user?.username %></p>
                           </div>
                           <div class="row">
                             <!-- <p
@@ -248,7 +256,7 @@
                                 href="/cdn-cgi/l/email-protection"
                                 class="__cf_email__"
                                 data-cfemail="a1cbcec9cfc5cec4e1c4d9c0ccd1cdc48fc2cecc"
-                                ><%= profile.user.email %></a
+                                ><%= profile?.user?.email %></a
                               >
                             </p>
                           </div>
@@ -258,15 +266,15 @@
                             >
                               Mobile
                             </p>
-                            <p class="col-sm-9"><%= profile.contactNumber %></p>
+                            <p class="col-sm-9"><%= profile?.contactNumber %></p>
                           </div>
                           <div class="row">
                             <p
                               class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3"
                             >
-                              Mobile
+                              Department
                             </p>
-                            <p class="col-sm-9"><%= profile.contactNumber %></p>
+                            <p class="col-sm-9"><%= profile?.department?.name %></p>
                           </div>
                           
                           <!-- <div class="row">
@@ -287,7 +295,7 @@
                 </div>
 
                 <!-- <div id="password_tab" class="tab-pane fade"> -->
-                <form id="change-password-form">
+                <!-- <form id="change-password-form">
                   <div class="card">
                     <div class="card-body">
                       <h5 class="card-title">Change Password</h5>
@@ -314,7 +322,7 @@
                       </div>
                     </div>
               </div>
-            </form>
+            </form> -->
             </div>
           </div>
         </div>
