@@ -96,6 +96,7 @@ model StudentProfile {
   user             User        @relation(fields: [userId], references: [id])
 
   @@map("student_profile")
+  EventFeedback EventFeedback[]
 }
 
 model StaffProfile {
@@ -160,12 +161,24 @@ model Event {
   isPublished   Boolean             @default(true) @map("is_published")
   createdAt     DateTime            @default(now()) @map("created_at")
   updatedAt     DateTime            @default(now()) @map("updated_at")
-  // feedback        EventFeedback[]
+  feedback        EventFeedback[]
   registrations EventRegistration[]
-  // creator         User                @relation("EventCreator", fields: [createdBy], references: [id])
 
   @@map("events")
 }
+model EventFeedback {
+  id          Int             @id @default(autoincrement()) @map("feedback_id")
+  eventId     Int             @map("event_id")
+  createdById Int             @map("created_by")
+  rating      Int             // e.g., 1 to 5
+  comment     String?         // Optional textual feedback
+  createdAt   DateTime        @default(now()) @map("created_at")
+
+  // Relations
+  event        Event          @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  createdBy    StudentProfile @relation(fields: [createdById], references: [id], onDelete: Cascade)
+}
+
 
 model EventRegistration {
   id                Int              @id @default(autoincrement()) @map("registration_id")

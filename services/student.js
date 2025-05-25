@@ -87,6 +87,18 @@ module.exports = {
         },
       });
       return attendance;
+    },
+    async getStudentById(id) {
+      const student = await prisma.studentProfile.findUnique({
+        where: {
+          userId: id,
+        },
+        include: {
+          user: true,
+          department: true,
+        },
+      });
+      return student;
     }
 
 }

@@ -15,6 +15,8 @@ const {
   chats,
   getCommunity,
   addCommunity,
+  getSIngleEvent,
+  addFeedback,
 } = require("../controllers/studentController");
 
 const router = express.Router();
@@ -33,4 +35,6 @@ router.get("/student/chat",isStudent, getChats)
 router.post("/student/chat", isStudent,  chats)
 router.get("/student/community", isStudent, getCommunity);
 router.post("/student/community", isStudent, addCommunity);
+router.get("/student/event/:eventId", isStudent, getSIngleEvent);
+router.post("/student/event/feedback/:eventId", isStudent, addFeedback);
 module.exports = router;

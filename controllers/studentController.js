@@ -1,9 +1,10 @@
+const { get } = require("../routes/auth.routes");
 const { getAdmin } = require("../services/admin");
-const { getAllEvents, latestEvents } = require("../services/event");
+const { getAllEvents, latestEvents, getEventById, addEventComment } = require("../services/event");
 const { getAllMessages, createMessage } = require("../services/message");
 const { createComplaint, getComplaintByUserId } = require("../services/report");
 const { getAllStaffs } = require("../services/staff");
-const { getAttendanceById } = require("../services/student");
+const { getAttendanceById, getStudentById } = require("../services/student");
 const { getAllSubjects } = require("../services/subject");
 const { getAllVehicles } = require("../services/vehicles");
 const userContexts = {};
@@ -741,5 +742,27 @@ module.exports = {
     const {content} = req.body;
     await createMessage(content, id);
     res.redirect("/student/community");
+  },
+  async getSIngleEvent(req, res) {
+    const { userId } = req.session;
+    const student = await getAdmin(userId);
+    const { eventId } = req.params;
+    const event = await getEventById(parseInt(eventId));
+    console.log(event);
+    res.render("singleEvent", { student, event });
   }
+,
+  async addFeedback(req, res) {
+  const { userId } = req.session;
+  const student = await getStudentById(parseInt(userId));
+  console.log("Student ID:", student.id);
+  const { comment, rating } = req.body;
+  const { eventId } = req.params;
+
+  await addEventComment(parseInt(eventId), comment, parseInt(rating), student.id);
+
+
+  res.status(200).json({ message: 'Feedback submitted successfully' });
+}
+
 };

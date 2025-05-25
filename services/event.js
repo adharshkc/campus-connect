@@ -49,4 +49,27 @@ module.exports = {
       },
     });
   }
+
+,
+async addEventComment(
+  eventId,
+  comment,
+  rating,
+  createdBy
+) {
+  try {
+    const feedback = await prisma.eventFeedback.create({
+      data: {
+        eventId,
+        comment,
+        rating,
+        createdById: createdBy,
+      },
+    });
+    return feedback;
+  } catch (error) {
+    console.error('Error adding event feedback:', error);
+    throw new Error('Failed to add feedback');
+  }
+}
 };
