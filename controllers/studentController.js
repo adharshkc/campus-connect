@@ -756,10 +756,11 @@ module.exports = {
   const { userId } = req.session;
   const student = await getStudentById(parseInt(userId));
   console.log("Student ID:", student.id);
-  const { comment, rating } = req.body;
+  const { comments, rating } = req.body;
+  console.log("Comment:", comments, rating);
   const { eventId } = req.params;
 
-  await addEventComment(parseInt(eventId), comment, parseInt(rating), student.id);
+  await addEventComment(parseInt(eventId), comments, parseInt(rating), student.id);
 
 
   res.status(200).json({ message: 'Feedback submitted successfully' });

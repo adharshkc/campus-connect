@@ -7,7 +7,7 @@ const {
   getDepById,
   depDelete,
 } = require("../services/department");
-const { getAllEvents, createEvent, getEventById, delEvent } = require("../services/event");
+const { getAllEvents, createEvent, getEventById, delEvent, getEventFeedback } = require("../services/event");
 const { reportDelete, getAllReports } = require("../services/report");
 const {
   getAllStaffs,
@@ -406,6 +406,18 @@ const deleteSubject = async (req, res) => {
   res.redirect("/admin/subjects");
 }
 
+async function getSingleEvent(req, res) {
+  const { eventId } = req.params;
+
+  const event = await prisma.event.findUnique({ where: { id: parseInt(eventId) } });
+  const feedbackList = await getEventFeedback(parseInt(eventId));
+
+  res.render('adminSingleEvent', {
+    event,
+    feedbackList,
+  });
+}
+
 module.exports = {
   getAdminDashboard,
   getAdminStudent,
@@ -437,5 +449,6 @@ module.exports = {
   getAdminSubjects,
   getAddSubject,
   addSubject,
-  deleteSubject
+  deleteSubject,
+  getSingleEvent
 };

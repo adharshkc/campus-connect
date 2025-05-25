@@ -66,10 +66,28 @@ async addEventComment(
         createdById: createdBy,
       },
     });
+    console.log(comment)
     return feedback;
   } catch (error) {
     console.error('Error adding event feedback:', error);
     throw new Error('Failed to add feedback');
   }
+},
+ async getEventFeedback(eventId) {
+  return await prisma.eventFeedback.findMany({
+    where: {
+      eventId,
+    },
+    include: {
+      createdBy: {
+        select: {
+          fullName: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
 }
-};
+}

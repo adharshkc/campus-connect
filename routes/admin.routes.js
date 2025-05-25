@@ -31,6 +31,7 @@ const {
   getAddSubject,
   addSubject,
   deleteSubject,
+  getSingleEvent,
 } = require("../controllers/adminController");
 const { isAdmin } = require("../middlewares/authentication");
 const router = express.Router();
@@ -67,6 +68,7 @@ router.get('/admin/subjects', isAdmin, getAdminSubjects)
 router.get('/admin/addSubject', isAdmin, getAddSubject)
 router.post('/admin/addSubject', isAdmin, addSubject)
 router.get('/admin/deleteSubject/:id', isAdmin, deleteSubject)
+router.get("/admin/event/:eventId", isAdmin, getSingleEvent);
 
 
 module.exports = router;
