@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=0"
     />
-    <title> Departments</title>
+    <title>Community Chat</title>
 
     <link rel="shortcut icon" href="/assets/img/favicon.png" />
 
@@ -36,10 +36,12 @@
     />
 
     <link rel="stylesheet" href="/assets/css/style.css" />
+
+    <link rel="stylesheet" href="/assets/css/chat.css" />
   </head>
   <body>
     <div class="main-wrapper">
-        <div class="header">
+      <div class="header">
             <div class="header-left">
               <a href="index.html" class="logo">
                 <img src="/assets/img/logo.png" alt="Logo" />
@@ -148,7 +150,7 @@
                             <li><a href="edit-student.html">Student Edit</a></li>
                         </ul> -->
                     </li>
-                    <li class="submen">
+                    <li class="submen active">
                         <a href="/staff/attendance"><i class="fas fa-chalkboard-teacher"></i> <span> Attendance</span> <span
                                 class="menu-arrow"></span></a>
                         <!-- <ul>
@@ -158,7 +160,7 @@
                             <li><a href="edit-teacher.html">Teacher Edit</a></li>
                         </ul> -->
                     </li>
-                    <li class="submen active">
+                    <li class="submen">
                         <a href="/staff/departmentDashboard"><i class="fas fa-building"></i> <span> Departments</span> <span
                                 class="menu-arrow"></span></a>
                         <!-- <ul>
@@ -167,14 +169,20 @@
                             <li><a href="edit-department.html">Department Edit</a></li>
                         </ul> -->
                     </li>
-                    
+                    <!-- <li class="submen">
+                        <a href="#"><i class="fas fa-book-reader"></i> <span> Reportings</span> <span
+                                class="menu-arrow"></span></a>
+                        
+                    </li> -->
                     <li>
                         <a href="/staff/vehicleDashboard"><i class="fas fa-holly-berry"></i> <span>Vehicles</span></a>
                     </li>
                     <li>
                         <a href="/staff/eventDashboard"><i class="fas fa-calendar-day"></i> <span>Events</span></a>
                     </li>
-                    <li class="">
+                    
+                    </li>
+                     <li class="active">
                 <a href="/staff/community"
                   ><i class="fas fa-users"></i> <span>Community</span></a
                 >
@@ -187,182 +195,80 @@
       <div class="page-wrapper">
         <div class="content container-fluid">
           <div class="page-header">
-            <div class="row align-items-center">
-              <div class="col">
-                <h3 class="page-title">Departments</h3>
-                <ul class="breadcrumb">
-                  <li class="breadcrumb-item">
-                    <a href="#">Dashboard</a>
-                  </li>
-                  <li class="breadcrumb-item active">Departments</li>
-                </ul>
-              </div>
-            </div>
+            <div class="row align-items-center"></div>
           </div>
 
-          <!-- <div class="student-group-form">
-            <div class="row">
-              <div class="col-lg-3 col-md-6">
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Search by ID ..."
-                  />
-                </div>
-              </div>
-              <div class="col-lg-3 col-md-6">
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Search by Name ..."
-                  />
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-6">
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Search by Phone ..."
-                  />
-                </div>
-              </div>
-              <div class="col-lg-2">
-                <div class="search-student-btn">
-                  <button type="btn" class="btn btn-primary">Search</button>
-                </div>
-              </div>
-            </div>
-          </div> -->
           <div class="row">
-            <div class="col-sm-12">
-              <div class="card card-table">
-                <div class="card-body">
-                  <div class="page-header">
-                    <div class="row align-items-center">
-                      <div class="col">
-                        <h3 class="page-title">Departments</h3>
+            <div class="col-12">
+              <div class="chat-container">
+                <div class="row g-0 h-100">
+                  <!-- Chat Main Content -->
+                  <div class="col-lg-8 col-md-7 chat-main">
+                    <!-- Chat Header -->
+                    <div
+                      class="chat-header d-flex justify-content-between align-items-center"
+                    >
+                      <div class="d-flex align-items-center"></div>
+                    </div>
+
+                    <!-- Chat Body -->
+                    <div class="chat-body">
+                        <% messages.forEach(msg => { %>
+                          <% if (msg.userId === student.id) { %>
+                            <!-- Outgoing Message -->
+                            <div class="message message-outgoing">
+                              <div class="message-content"><%= msg.content %></div>
+                              <div class="message-meta">You • <%= new Date(msg.createdAt).toLocaleTimeString() %></div>
+                            </div>
+                          <% } else { %>
+                            <!-- Incoming Message -->
+                            <div class="message message-incoming">
+                              <div class="d-flex">
+                                <div class="chat-avatar d-flex align-items-center justify-content-center">
+                                    <%= msg.user.username %>
+                                  </div>
+                                <div class="flex-grow-1 ms-2">
+                                  <div class="message-"><%= msg.content %></div>
+                                  <div class="message-meta"><%= msg.user.name %> • <%= new Date(msg.createdAt).toLocaleTimeString() %></div>
+                                </div>
+                              </div>
+                            </div>
+                          <% } %>
+                        <% }) %>
                       </div>
-                      <div
-                        class="col-auto text-end float-end ms-auto download-grp"
-                      >
-                        <a
-                          href="#"
-                          class="btn btn-outline-gray me-2 active"
-                          ><i class="feather-list"></i
-                        ></a>
-                        <!-- <a
-                          href="teachers-grid.html"
-                          class="btn btn-outline-gray me-2"
-                          ><i class="feather-grid"></i
-                        ></a> -->
-                        <!-- <a href="#" class="btn btn-outline-primary me-2"
-                          ><i class="fas fa-download"></i> Download</a
-                        > -->
-                        <!-- <a href="/admin/addDepartment" class="btn btn-primary"
-                          ><i class="fas fa-plus"></i
-                        ></a> -->
+                      
+
+                    <!-- Chat Footer -->
+                    <div class="chat-footer">
+                        <form action="/student/community" method="POST">
+                            <div class="position-relative">
+                              <input
+                                name="content"
+                                type="text"
+                                class="form-control chat-input"
+                                placeholder="Type a message..."
+                                required
+                              />
+                              <div
+                                class="position-absolute top-50 end-0 translate-middle-y d-flex"
+                              >
+                                <button type="submit" class="btn btn-primary rounded-circle chat-send-btn">
+                                  <i class="fas fa-paper-plane"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </form>
+                          
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="table-responsive">
-                    <table
-                    class="table border-0 star-student table-hover table-center mb-0 table-striped"
-                  >
-                    <thead class="student-thread">
-                      <tr>
-                        <th>
-                          <div class="form-check check-tables">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value="something"
-                            />
-                          </div>
-                        </th>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Code</th>
-                        <!-- <th>Head of the Department</th> -->
-                        <!-- <th>Email</th>
-                        <th>Subject</th>
-                        <th>Mobile Number</th> -->
-                        <th class="text-end">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <% departments.forEach(function(department) { %>
-                      <tr>
-                        <td>
-                          <div class="form-check check-tables">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value="<%= department.id %>"
-                            />
-                          </div>
-                        </td>
-                        <td><%= department.id || 'N/A' %></td>
-                        <td>
-                          <h2 class="table-avatar">
-                            <a href="#"
-                              ><%= department.name %></a
-                            >
-                          </h2>
-                        </td>
-                        <!-- <td>
-                          <%= new Date(department.joiningDate).toLocaleDateString('en-GB') %>
-                        </td> -->
-                        <td>
-                          <%= department.code
-                          %>
-                        </td>
-                        <!-- <td><%= department.headStaff?.fullName || 'N/A' %></td> -->
-                        <!-- <td><%= department.subjectSpecialization || 'N/A' %></td>
-                        <td><%= department.contactNumber || 'N/A' %></td> -->
-                        <td class="text-end">
-                          <div class="actions">
-                            <a
-                              href="/admin/deleteDepartment/<%= department.id %>"
-                              class="btn btn-sm bg-success-light me-2"
-                            >
-                              <i class="feather-trash"></i>
-                            </a>
-                            <a
-                              href="/admin/editDepartment/<%= department.id %>"
-                              class="btn btn-sm bg-danger-light"
-                            >
-                              <i class="feather-edit"></i>
-                            </a>
-                          </div>
-                        </td>
-                      </tr>
-                      <% }); %>
-                    </tbody>
-                  </table>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
-
-    <script src="assets/js/jquery-3.6.0.min.js"></script>
-
-    <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <script src="assets/js/feather.min.js"></script>
-
-    <script src="assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
-    <script src="assets/plugins/datatables/datatables.min.js"></script>
-
-    <script src="assets/js/script.js"></script>
   </body>
 </html>

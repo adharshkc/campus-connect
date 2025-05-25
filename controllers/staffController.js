@@ -2,6 +2,7 @@ const prisma = require("../prisma/client");
 const { getAdmin } = require("../services/admin");
 const { getAllDepartments } = require("../services/department");
 const { getAllEvents } = require("../services/event");
+const { getAllMessages } = require("../services/message");
 const { getStaffById, getStaffByUserId } = require("../services/staff");
 const { getAllStudents, createStudent, studentDelete } = require("../services/student");
 const { getAllVehicles } = require("../services/vehicles");
@@ -224,5 +225,12 @@ module.exports = {
     const staff = await getAdmin(userId);
     const events = await getAllEvents();
     res.render("staffEventDashboard", { staff, events });
+  },
+    async getCommunity(req, res) {
+    const { userId } = req.session;
+    const student = await getAdmin(userId);
+    const messages = await getAllMessages();
+    console.log(messages)
+    res.render("studentCommunityDashboard", { student, messages });
   },
 };
