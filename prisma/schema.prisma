@@ -13,6 +13,7 @@ model User {
   email                     String                 @unique
   passwordHash              String                 @map("password_hash")
   userType                  UserType               @map("user_type")
+  token                     String?                @unique @map("token")
   isActive                  Boolean                @default(true) @map("is_active")
   lastLogin                 DateTime?              @map("last_login")
   createdAt                 DateTime               @default(now()) @map("created_at")

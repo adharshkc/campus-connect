@@ -5,6 +5,7 @@ const {
   login,
   logout,
   getProfile,
+  forgotPassword,
 } = require("../controllers/auth");
 // const { protect } = require("../middlewares/authentication");
 const viewController = require("../controllers/viewController");
@@ -15,6 +16,9 @@ router.post("/login", login);
 // router.get("/student", getStudentDashboard);
 router.get("/logout", logout);
 router.get("/profile", getProfile)
-// router.post("/forgot-password", forgotPassword);
+router.get("/forgotPassword", viewController.getForgotPassword);
+router.post("/forgot-password", forgotPassword);
+router.get("/reset-password/:token", viewController.getResetPassword);
+router.post("/new-password", viewController.postNewPassword);
 
 module.exports = router;

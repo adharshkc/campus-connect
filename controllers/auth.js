@@ -1,8 +1,9 @@
 const prisma = require("../prisma/client");
 const { getAdmin } = require("../services/admin");
 const authService = require("../services/auth");
+const nodemailer = require("nodemailer");
 
-
+const crypto = require('crypto');
 
 
 const login = async (req, res, next) => {
@@ -94,20 +95,56 @@ async function getProfile(req, res){
     console.error("Error fetching profile:", error);
   }
 }
+const transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',  // SMTP server address
+  port: 587,                 // Port for SMTP (usually 587 for TLS or 465 for SSL)
+  secure: false,             // true for 465, false for other ports
+  auth: {
+    user: 'Campusconnectsoftware@gmail.com',
+    pass: 'nhdn mpwa fqpn ckvq'
+  }
+});
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user =  await prisma.user.findUnique({ where: { email } });
+    if (!user) {
+      return res.render('forgotPassword', { message: "Email not found" });
+    }
+     const resetToken = crypto.randomBytes(32).toString('hex');
+    // const tokenExpiry = new Date(Date.now() + 3600000); // 1 hour from now
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        token:resetToken,
+      }
+    });
+     const mailOptions = {
+      from: '"Campus Connect" <Campusconnectsoftware@gmail.com>',
+      to: email,
+      subject: 'Password Reset Request',
+      text: `Dear ${user.username},\n\nWe received a request to reset your password. If you did not make this request, please ignore this email.\n\nTo reset your password, please click the link below:\n\nhttp://localhost:3000/reset-password/${resetToken}\n\nIf you have any questions, feel free to contact us.\n\nBest regards,\nCampus Connect Team`,
+      html: `
+        <p>Dear ${user.username},</p>
+        <p>We received a request to reset your password. If you did not make this request, please ignore this email.</p>
+        <p>To reset your password, please click the link below:</p>
+        <p><a href="http://localhost:3000/reset-password/${resetToken}">Reset Password</a></p>
+      `
+    };
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return console.error('Error:', error);
+        }
+        console.log('Email sent successfully!');
+        console.log('Message ID:', info.messageId);
+      });
 
-// const forgotPassword = async (req, res) => {
-//   const { email } = req.body;
-//   try {
-//     const user = await authService.forgotPassword(email);
-//     if (!user) {
-//       return res.status(404).json({ message: "User not found" });
-//     }
-//     // Send email with reset link
-//     res.status(200).json({ message: "Reset link sent to your email" });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// };
+    // Send email with reset link
+    res.render('forgotPassword', { message: "Password reset link sent to your email" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
-module.exports = {login, getLogin, getStudentDashboard, logout, getProfile}
+module.exports = {login, getLogin, getStudentDashboard, logout, getProfile, forgotPassword};
